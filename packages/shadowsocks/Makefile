@@ -30,7 +30,7 @@ include $(INCLUDE_DIR)/package.mk
 
 define Package/shadowsocks-libev/Default
 	SECTION:=net
-	CATEGORY:=Network
+	CATEGORY:=Gmod
 	TITLE:=Lightweight Secured Socks5 Proxy $(2)
 	URL:=https://github.com/shadowsocks/shadowsocks-libev
 	VARIANT:=$(1)
