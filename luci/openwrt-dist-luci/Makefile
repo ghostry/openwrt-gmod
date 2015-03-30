@@ -80,7 +80,21 @@ define Package/openwrt-dist-luci/install
 	$(INSTALL_BIN) ./files/root/etc/uci-defaults/luci-$(2) $(1)/etc/uci-defaults/luci-$(2)
 endef
 
-Package/luci-app-aria2/install = $(call Package/openwrt-dist-luci/install,$(1),aria2)
+define Package/luci-app-aria2/install
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
+	$(INSTALL_DATA) ./files/luci/controller/aria2.lua $(1)/usr/lib/lua/luci/controller/aria2.lua
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
+	$(INSTALL_DATA) ./files/luci/i18n/aria2.*.lmo $(1)/usr/lib/lua/luci/i18n
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
+	$(INSTALL_DATA) ./files/luci/model/cbi/aria2.lua $(1)/usr/lib/lua/luci/model/cbi/aria2.lua
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/root/etc/uci-defaults/luci-aria2 $(1)/etc/uci-defaults/luci-aria2
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) ./files/root/etc/config/aria2 $(1)/etc/config/aria2
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/root/etc/init.d/aria2 $(1)/etc/init.d/aria2
+endef
+
 Package/luci-app-chinadns/install = $(call Package/openwrt-dist-luci/install,$(1),chinadns)
 Package/luci-app-redsocks2/install = $(call Package/openwrt-dist-luci/install,$(1),redsocks2)
 Package/luci-app-shadowvpn/install = $(call Package/openwrt-dist-luci/install,$(1),shadowvpn)
