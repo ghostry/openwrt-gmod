@@ -22,7 +22,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/openwrt-dist-luci/Default
 	SECTION:=luci
 	CATEGORY:=Gmod
-	SUBMENU:=Luci
+	SUBMENU:=Luci/Applications
 	TITLE:=$(1) LuCI interface
 	PKGARCH:=all
 endef
