@@ -23,13 +23,13 @@ define Package/openwrt-dist-luci/Default
 	SECTION:=luci
 	CATEGORY:=Gmod
 	SUBMENU:=Luci
-	SUBMENU:=Applications
 	TITLE:=$(1) LuCI interface
 	PKGARCH:=all
+	DEPENDS:=$(1)
 endef
 
 Package/luci-app-chinadns = $(call Package/openwrt-dist-luci/Default,ChinaDNS)
-Package/luci-app-redsocks2 = $(call Package/openwrt-dist-luci/Default,RedSocks2)
+Package/luci-app-redsocks2 = $(call Package/openwrt-dist-luci/Default,redsocks2)
 Package/luci-app-shadowvpn = $(call Package/openwrt-dist-luci/Default,ShadowVPN)
 Package/luci-app-shadowsocks-spec = $(call Package/openwrt-dist-luci/Default,shadowsocks-libev-spec)
 
