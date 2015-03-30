@@ -40,7 +40,7 @@ define application
     PKGARCH:=all
     SUBMENU:=Luci
     TITLE:=$(if $(2),$(2),LuCI $(1) application)
-	DEPENDS:=$(3)
+	DEPENDS:=+luci $(3)
   endef
 
   define Package/luci-app-$(1)/install

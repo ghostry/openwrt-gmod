@@ -25,7 +25,7 @@ define Package/openwrt-dist-luci/Default
 	SUBMENU:=Luci
 	TITLE:=$(1) LuCI interface
 	PKGARCH:=all
-	DEPENDS:=+$(1)
+	DEPENDS:=+luci +$(1)
 endef
 
 Package/luci-app-chinadns = $(call Package/openwrt-dist-luci/Default,ChinaDNS)
