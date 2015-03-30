@@ -25,7 +25,7 @@ define Package/openwrt-dist-luci/Default
 	SUBMENU:=Luci
 	TITLE:=$(1) LuCI interface
 	PKGARCH:=all
-	DEPENDS:=$(1)
+	DEPENDS:=+$(1)
 endef
 
 Package/luci-app-chinadns = $(call Package/openwrt-dist-luci/Default,ChinaDNS)
@@ -38,7 +38,7 @@ define Package/openwrt-dist-luci/description
 endef
 
 Package/luci-app-chinadns/description = $(call Package/openwrt-dist-luci/description,ChinaDNS)
-Package/luci-app-redsocks2/description = $(call Package/openwrt-dist-luci/description,RedSocks2)
+Package/luci-app-redsocks2/description = $(call Package/openwrt-dist-luci/description,redsocks2)
 Package/luci-app-shadowvpn/description = $(call Package/openwrt-dist-luci/description,ShadowVPN)
 Package/luci-app-shadowsocks-spec/description = $(call Package/openwrt-dist-luci/description,shadowsocks-libev-spec)
 
