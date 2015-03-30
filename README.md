@@ -1,13 +1,30 @@
 # openwrt-gmod
 
-Install
+包含内容
+-------
+    luci-app-aria2
+    luci-app-chinadns
+    luci-app-redsocks2
+    luci-app-shadowvpn
+    luci-app-shadowsocks-spec
+    chinadns
+    redsocks2
+    shadowvpn
+    shadowsocks-libev
+    shadowsocks-libev-spec
+    shadowsocks-libev-polarssl
+    shadowsocks-libev-spec-polarssl
+
+==============
+
+安装
 -------
 
-Add this line to your feeds.conf.default.
+在你的 feeds.conf.default 文件添加下面这行
 
     src-git gmod https://github.com/ghostry/openwrt-gmod
 
-And run
+然后运行
 
     ./scripts/feeds update -a && ./scripts/feeds install -a
 
