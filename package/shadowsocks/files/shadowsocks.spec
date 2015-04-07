@@ -6,7 +6,7 @@ STOP=15
 SERVICE_USE_PID=1
 SERVICE_WRITE_PID=1
 SERVICE_DAEMONIZE=1
-EXTRA_COMMANDS="rules"
+EXTRA_COMMANDS="rules upignore"
 CONFIG_FILE=/var/etc/shadowsocks.json
 
 get_config() {
@@ -121,3 +121,8 @@ stop() {
 	service_stop /usr/bin/ss-tunnel
 	rm -f $CONFIG_FILE
 }
+upignore(){                                            
+	wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/shadowsocks/ignore.list
+	stop                                                                                                                                                                     
+	start                                         
+} 
