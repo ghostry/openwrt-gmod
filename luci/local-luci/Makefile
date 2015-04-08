@@ -46,7 +46,7 @@ endef
 
 define Package/local-luci-zh-cn/install
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
-	$(INSTALL_BIN) ./files/etc/uci-defaults/local-luci-zh-cn $(1)/etc/uci-defaults/local-luci-zh-cn
+	$(INSTALL_BIN) ./files/root/etc/uci-defaults/local-luci-zh-cn $(1)/etc/uci-defaults/local-luci-zh-cn
 endef
 
 
