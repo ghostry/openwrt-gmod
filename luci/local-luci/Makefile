@@ -42,21 +42,11 @@ define Build/Compile
 endef
 
 define Package/local-luci-zh-cn/postinst
-#!/bin/sh
-if [ -z "$${IPKG_INSTROOT}" ]; then
-    uci batch <<-EOF
-	set system.@system[0].zonename=Asia/Shanghai
-	set system.@system[0].timezone=CST-8
-	commit system
-	set luci.main.lang=zh_cn
-	commit luci
-EOF
-fi
-exit 0
 endef
 
 define Package/local-luci-zh-cn/install
-	$(INSTALL_DIR) $(1)/tmp
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/etc/uci-defaults/local-luci-zh-cn $(1)/etc/uci-defaults/local-luci-zh-cn
 endef
 
 
