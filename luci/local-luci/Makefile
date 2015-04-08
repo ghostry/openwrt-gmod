@@ -57,7 +57,6 @@ endef
 
 define Package/local-luci-zh-cn/install
 	$(INSTALL_DIR) $(1)/tmp
-	$(INSTALL_BIN) ./files/root/tmp/local-luci-zh-cn.log $(1)/tmp/local-luci-zh-cn.log
 endef
 
 
