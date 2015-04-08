@@ -25,7 +25,7 @@ define Package/local-luci-zh-cn
 	SUBMENU:=Luci
 	TITLE:=luci localization configuration
 	PKGARCH:=all
-	DEPENDS:=+luci
+	DEPENDS:=+luci +luci-i18n-base-zh-cn +luci-i18n-firewall-zh-cn
 endef
 
 define Package/local-luci-zh-cn/description
@@ -44,13 +44,15 @@ endef
 define Package/local-luci-zh-cn/postinst
 #!/bin/sh
 if [ -z "$${IPKG_INSTROOT}" ]; then
-    sed -i  's/option lang auto/option lang zh-cn/g' /etc/config/luci
+    sed -i  's/auto/zh-cn/g' /etc/config/luci
     sed -i  's/UTC/"CST-8"/g' /etc/config/system
 fi
 exit 0
 endef
 
 define Package/local-luci-zh-cn/install
+	$(INSTALL_DIR) $(1)/tmp
+	$(INSTALL_BIN) ./files/root/tmp/local-luci-zh-cn.log $(1)/tmp/local-luci-zh-cn.log
 endef
 
 
