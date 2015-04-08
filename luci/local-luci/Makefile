@@ -44,9 +44,13 @@ endef
 define Package/local-luci-zh-cn/postinst
 #!/bin/sh
 if [ -z "$${IPKG_INSTROOT}" ]; then
-    sed -i  's/auto/zh_cn/g' /etc/config/luci
-    sed -i  's/UTC/CST-8/g' /etc/config/system
-    sed -i '/option timezone/a option zonename "Asia/Shanghai"' /etc/config/system
+    uci batch <<-EOF
+	set system.@system[0].zonename=Asia/Shanghai
+	set system.@system[0].timezone=CST-8
+	commit system
+	set luci.main.lang=zh_cn
+	commit luci
+EOF
 fi
 exit 0
 endef
