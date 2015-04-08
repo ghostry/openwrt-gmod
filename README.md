@@ -59,6 +59,7 @@
 
  - shadowsocks-libev-spec
 
-shadowsocks-libev-spec使用的 IP 忽略列表: /etc/shadowsocks/ignore.list 可以使用下面命令更新
+shadowsocks-libev-spec使用的 IP 忽略列表: /etc/shadowsocks/ignore.list 每天凌晨4点自动更新，你也可以使用下面命令更新
 
-    wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/shadowsocks/ignore.list
+    /etc/init.d/shadowsocks upignore
+
