@@ -44,7 +44,7 @@ endef
 define Package/local-luci-zh-cn/postinst
 #!/bin/sh
 if [ -z "$${IPKG_INSTROOT}" ]; then
-    sed -i  's/auto/zh-cn/g' /etc/config/luci
+    sed -i  's/auto/zh_cn/g' /etc/config/luci
     sed -i  's/UTC/"CST-8"/g' /etc/config/system
 fi
 exit 0
