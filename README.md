@@ -2,6 +2,7 @@
 
 包含内容
 -------
+    local-luci  #自动设置语言为中文简体,时区为东8区上海
     luci-app-aria2
     luci-app-chinadns
     luci-app-redsocks2
@@ -14,6 +15,7 @@
     shadowsocks-libev-spec
     shadowsocks-libev-polarssl
     shadowsocks-libev-spec-polarssl
+    he-6in4  #为6in4更新客户端ip,配合luci-proto-ipv6使用
 
 ==============
 
