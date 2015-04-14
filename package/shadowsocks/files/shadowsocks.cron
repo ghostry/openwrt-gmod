@@ -1,5 +1,11 @@
 #!/bin/sh
-echo "1 4 * * * /etc/init.d/shadowsocks upignore" >> $(1)/etc/crontabs/root
-echo " " >> $(1)/etc/crontabs/root
-echo 'root' >> $(1)/etc/crontabs/cron.update
-
+if [ ! -f "/etc/crontabs/root" ]; then 
+	echo "1 4 * * * /etc/init.d/shadowsocks upignore" > /etc/crontabs/root
+	echo " " >> /etc/crontabs/root
+	echo 'root' >> /etc/crontabs/cron.update
+else
+	cun=`grep 'shadowsocks' /etc/crontabs/root|grep  'upignore'`
+	if [ "$cun" = "" ];then
+		sed -i 1i\\'1 4 * * * /etc/init.d/shadowsocks upignore' /etc/crontabs/root
+	fi
+fi
