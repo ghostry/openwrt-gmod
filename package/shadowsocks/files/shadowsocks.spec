@@ -122,7 +122,8 @@ stop() {
 	rm -f $CONFIG_FILE
 }
 upignore(){                                            
-	wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /etc/shadowsocks/ignore.list
+	wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /tmp/shadowsocksupignore
+	[ `wc -c /tmp/shadowsocksupignore | cut -d' ' -f1` -gt 5000 ] && cat /tmp/shadowsocksupignore > /etc/shadowsocks/ignore.list
 	stop                                                                                                                                                                     
 	start                                         
 } 
