@@ -69,21 +69,11 @@ EOF
 
 fw_rule() {
 	$ipt -N SS_SPEC_WAN_FW
-	$ipt -A SS_SPEC_WAN_FW -p tcp --dport 80 \
+	$ipt -A SS_SPEC_WAN_FW -p tcp \
 		-j REDIRECT --to-ports $LOCAL_PORT 2>/dev/null || {
 		LOCAL_IP=$(uci get network.lan.ipaddr 2>/dev/null)
 		[ -n "$LOCAL_IP" ] && \
-		$ipt -A SS_SPEC_WAN_FW -p tcp --dport 80 \
-			-j DNAT --to-destination $LOCAL_IP:$LOCAL_PORT
-	} || {
-		loger 3 "Can't redirect, please check the iptables."
-		exit 1
-	}
-	$ipt -A SS_SPEC_WAN_FW -p tcp --dport 443 \
-		-j REDIRECT --to-ports $LOCAL_PORT 2>/dev/null || {
-		LOCAL_IP=$(uci get network.lan.ipaddr 2>/dev/null)
-		[ -n "$LOCAL_IP" ] && \
-		$ipt -A SS_SPEC_WAN_FW -p tcp --dport 443 \
+		$ipt -A SS_SPEC_WAN_FW -p tcp \
 			-j DNAT --to-destination $LOCAL_IP:$LOCAL_PORT
 	} || {
 		loger 3 "Can't redirect, please check the iptables."
