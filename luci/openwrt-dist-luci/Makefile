@@ -30,7 +30,7 @@ endef
 
 Package/luci-app-aria2 = $(call Package/openwrt-dist-luci/Default,aria2)
 Package/luci-app-chinadns = $(call Package/openwrt-dist-luci/Default,ChinaDNS)
-Package/luci-app-redsocks2 = $(call Package/openwrt-dist-luci/Default,redsocks2)
+Package/luci-app-redsocks2 = $(call Package/openwrt-dist-luci/Default,redsocks2-openssl)
 Package/luci-app-shadowvpn = $(call Package/openwrt-dist-luci/Default,ShadowVPN)
 Package/luci-app-shadowsocks-spec = $(call Package/openwrt-dist-luci/Default,shadowsocks-libev-spec)
 

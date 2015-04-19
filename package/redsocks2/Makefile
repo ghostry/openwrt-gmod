@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2014 OpenWrt-dist
+# Copyright (C) 2015 OpenWrt-dist && wongsyrone
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,12 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=redsocks2
-PKG_VERSION:=0.60
-PKG_RELEASE=2
+PKG_VERSION:=0.60-15da7ff18e
+PKG_RELEASE:=1
+PKG_REV:=15da7ff18ec582b20f8c13027a2b60c22ecc67c3
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://github.com/aa65535/openwrt-redsocks2/releases/download/v$(PKG_VERSION)
-PKG_MD5SUM:=b88bf23bf75fa7642f8d230db21f73b9
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_URL:=https://github.com/semigodking/redsocks.git
+PKG_SOURCE_VERSION:=$(PKG_REV)
 
 PKG_LICENSE:=GPLv2
 PKG_LICENSE_FILES:=LICENSE
@@ -23,24 +26,39 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSI
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/redsocks2
+define Package/redsocks2/Default
 	SECTION:=net
 	CATEGORY:=Gmod
 	SUBMENU:=Network
-	TITLE:=Redirect any TCP connection to a SOCKS or HTTPS proxy server
+	TITLE:=TCP to SOCKS or HTTPS proxy server $(2)
 	URL:=https://github.com/semigodking/redsocks
-	DEPENDS:=+libevent2
+	VARIANT:=$(1)
+	DEPENDS:=$(3)
 endef
 
+Package/redsocks2-openssl = $(call Package/redsocks2/Default,openssl,(OpenSSL),+libevent2 +libopenssl)
+Package/redsocks2-polarssl = $(call Package/redsocks2/Default,polarssl,(PolarSSL),+libevent2 +libpolarssl)
+
 define Package/redsocks2/description
+Redirect any TCP connection to a SOCKS or HTTPS proxy server. \
 This is a modified version of original redsocks. \
 The name is changed to be REDSOCKS2 since this release to distinguish with original redsocks. \
 This variant is useful for anti-GFW (Great Fire Wall).
 endef
 
+Package/redsocks2-openssl/description = $(Package/redsocks2/description)
+Package/redsocks2-polarssl/description = $(Package/redsocks2/description)
+
 define Package/redsocks2/conffiles
 /etc/config/redsocks2
 endef
+
+Package/redsocks2-openssl/conffiles = $(Package/redsocks2/conffiles)
+Package/redsocks2-polarssl/conffiles = $(Package/redsocks2/conffiles)
+
+ifeq ($(BUILD_VARIANT),polarssl)
+	MAKE_FLAGS += USE_CRYPTO_POLARSSL=true
+endif
 
 define Package/redsocks2/install
 	$(INSTALL_DIR) $(1)/usr/bin
@@ -53,4 +71,8 @@ define Package/redsocks2/install
 	$(INSTALL_DATA) ./files/redsocks2.template $(1)/etc/redsocks2/config.template
 endef
 
-$(eval $(call BuildPackage,redsocks2))
+Package/redsocks2-openssl/install = $(Package/redsocks2/install)
+Package/redsocks2-polarssl/install = $(Package/redsocks2/install)
+
+$(eval $(call BuildPackage,redsocks2-openssl))
+$(eval $(call BuildPackage,redsocks2-polarssl))
