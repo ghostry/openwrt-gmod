@@ -1,0 +1,57 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "RedSocks2"
+msgstr "RedSocks2"
+
+msgid "RedSocks2 is running"
+msgstr "RedSocks2 运行中"
+
+msgid "RedSocks2 is not running"
+msgstr "RedSocks2 未运行"
+
+msgid "General Setting"
+msgstr "基本设置"
+
+msgid "Enable"
+msgstr "启用"
+
+msgid "Disable"
+msgstr "禁用"
+
+msgid "Local Port"
+msgstr "本地端口"
+
+msgid "Proxy Type"
+msgstr "代理类型"
+
+msgid "Proxy IP"
+msgstr "代理 IP"
+
+msgid "Proxy Port"
+msgstr "代理端口"
+
+msgid "Auto Proxy"
+msgstr "自动判断"
+
+msgid "Wait Timeout"
+msgstr "等待超时"
+
+msgid "DNS Forwarding"
+msgstr "DNS转发"
+
+msgid "Select the option to take effect after the follow-up"
+msgstr "选中后后续选项才生效"
+
+msgid "Dest IP"
+msgstr "DNS服务器IP"
+
+msgid "Dest Port"
+msgstr "DNS服务器端口"
+
+msgid "UDP Timeout"
+msgstr "超时时间"
+
+msgid "Local DNS Port"
+msgstr "本地转发端口"
+

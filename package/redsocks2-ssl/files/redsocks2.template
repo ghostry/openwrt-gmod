@@ -1,0 +1,28 @@
+base {
+	log_debug = off;
+	log_info = off;
+	log = "file:/dev/null";
+	daemon = off;
+	redirector = iptables;
+}
+
+redsocks {
+	local_ip = 0.0.0.0;
+	local_port = |LOCAL_PORT|;
+	ip = |PROXY_IP|;
+	port = |PROXY_PORT|;
+	login = "|LOGIN|";
+	password = "|PASSWORD|";
+	type = |PROXY_TYPE|;
+	autoproxy = |AUTO_PROXY|;
+	timeout = |TIMEOUT|;
+}
+autoproxy {
+	no_quick_check_seconds = 3000;
+	quick_connect_timeout = 1;
+}
+ipcache {
+	cache_size = 4;
+	stale_time = 3600;
+	port_check = 1;
+}
