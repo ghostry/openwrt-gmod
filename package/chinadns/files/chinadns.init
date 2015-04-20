@@ -5,6 +5,7 @@ START=90
 SERVICE_USE_PID=1
 SERVICE_WRITE_PID=1
 SERVICE_DAEMONIZE=1
+EXTRA_COMMANDS="upchnroute"
 
 xappend() {
 	parms="$parms $1"
@@ -53,4 +54,11 @@ start() {
 
 stop() {
 	service_stop /usr/bin/chinadns
+}
+
+upchnroute(){                                            
+	wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > /tmp/chinadns_chnroute
+	[ `wc -c /tmp/chinadns_chnroute | cut -d' ' -f1` -gt 5000 ] && cat /tmp/chinadns_chnroute > /etc/chinadns_chnroute.txt
+	stop                                                                                                                                                                  
+	start                                         
 }

@@ -55,6 +55,8 @@ define Package/ChinaDNS/install
 	$(INSTALL_DATA) ./files/chinadns.config $(1)/etc/config/chinadns
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/chinadns $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/chinadns.cron $(1)/etc/uci-defaults/chinadns
 endef
 
 $(eval $(call BuildPackage,ChinaDNS))
