@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-redsocks2-openssl
-PKG_VERSION:=0.1
+PKG_VERSION:=1.0
 PKG_RELEASE:=1
 
 PKG_LICENSE:=GPLv3
@@ -29,7 +29,7 @@ define Package/luci-app-redsocks2-openssl
 endef
 
 
-define Package/uci-app-redsocks2-openssl/description
+define Package/luci-app-redsocks2-openssl/description
 	LuCI Support for redsocks2-openssl.
 endef
 
@@ -42,7 +42,7 @@ endef
 define Build/Compile
 endef
 
-define Package/uci-app-redsocks2-openssl/postinst
+define Package/luci-app-redsocks2-openssl/postinst
 #!/bin/sh
 if [ -z "$${IPKG_INSTROOT}" ]; then
 	( . /etc/uci-defaults/luci-redsocks2 ) && rm -f /etc/uci-defaults/luci-redsocks2
@@ -52,7 +52,7 @@ fi
 exit 0
 endef
 
-define Package/uci-app-redsocks2-openssl/install
+define Package/luci-app-redsocks2-openssl/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
 	$(INSTALL_DATA) ./files/luci/controller/redsocks2.lua $(1)/usr/lib/lua/luci/controller/redsocks2.lua
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
