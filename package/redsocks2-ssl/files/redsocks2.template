@@ -18,11 +18,11 @@ redsocks {
 	timeout = |TIMEOUT|;
 }
 autoproxy {
-	no_quick_check_seconds = 3000;
+	no_quick_check_seconds = 3600;
 	quick_connect_timeout = 1;
 }
 ipcache {
 	cache_size = 4;
-	stale_time = 3600;
+	stale_time = 28800;
 	port_check = 1;
 }
