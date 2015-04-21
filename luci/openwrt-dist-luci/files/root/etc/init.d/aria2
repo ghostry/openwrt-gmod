@@ -36,6 +36,9 @@ start_instance() {
 
 	config_get config_dir "$s" 'config_dir' '/var/etc/aria2'
 	config_get user "$s" 'user'
+	config_get dir "$s" 'dir'
+        config_get dir_complete "$s" 'dir_complete'
+
 
 	config_file="$config_dir/aria2.conf"
 	session_file="$config_dir/aria2.session"
@@ -46,9 +49,16 @@ start_instance() {
 	}
 	[ -z "$user" ] || chown -R $user $config_dir
 	touch "$session_file"
+	complete="$config_dir/complete.sh"
+        if [ "$dir_complete" = "$dir" ] ;then
+                echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" " > $complete
+        else
+                echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" \n[ \"\$3\" = \"\" ] ||  mv -n \$3 $dir_complete/" > $complete
+        fi
+        chmod +x $complete
 
-	echo -e "enable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nquiet=true" > $config_file
-	echo -e "continue=true\ninput-file=$session_file\nsave-session=$session_file\nforce-save=true\nbt-hash-check-seed=true\nbt-seed-unverified=true\nbt-save-metadata=true" >> $config_file
+	echo -e "enable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nquiet=true\nseed-time=120\nseed-ratio=1" > $config_file
+	echo -e "continue=true\ninput-file=$session_file\nsave-session=$session_file\non-download-complete=$complete\nbt-hash-check-seed=true\nbt-seed-unverified=true\nbt-save-metadata=true" >> $config_file
 	option_disabled "$s" 'enable_dht' || echo "dht-file-path=$dht_file" >> $config_file
 
 	append_params "$s" \

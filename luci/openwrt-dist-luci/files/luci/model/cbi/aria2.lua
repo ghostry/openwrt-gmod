@@ -42,7 +42,13 @@ file=m:section(TypedSection, "aria2", translate("Files and Locations"))
 file.anonymous=true
 config_dir=file:option(Value, "config_dir", translate("Config file directory"))
 config_dir.placeholder="/var/etc/aria2"
+config_dir.rmempty=false
 dir=file:option(Value, "dir", translate("Default download directory"))
+dir.placeholder="/mnt/sda1/tmp"
+dir.rmempty=false
+dircomplete=file:option(Value, "dir_complete", translate("Default download complete directory"))
+dircomplete.placeholder="/mnt/sda1"
+dircomplete.rmempty=false
 disk_cache=file:option(Value, "disk_cache", translate("Disk cache"), translate("in bytes, You can append K or M"))
 file_allocation=file:option(ListValue, "file_allocation", translate("Preallocation"), translate("\"falloc\" is not available in all cases"))
 file_allocation:value("none", translate("off"))

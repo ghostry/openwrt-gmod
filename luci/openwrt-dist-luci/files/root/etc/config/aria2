@@ -6,5 +6,6 @@ config aria2
 	option enable_dht 'true'
 	option follow_torrent 'true'
 	option user 'root'
-	option dir '/mnt/sda1'
+	option dir '/mnt/sda1/tmp'
+	option dir_complete '/mnt/sda1'
 	option save_session_interval '30'

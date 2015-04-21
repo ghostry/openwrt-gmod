@@ -28,6 +28,9 @@ msgstr "文件和目录"
 msgid "Default download directory"
 msgstr "默认下载目录"
 
+msgid "Default download complete directory"
+msgstr "默认下载完成目录"
+
 msgid "Disk cache"
 msgstr "磁盘缓存"
 
