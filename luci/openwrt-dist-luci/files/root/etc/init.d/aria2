@@ -53,7 +53,7 @@ start_instance() {
         if [ "$dir_complete" = "$dir" ] ;then
                 echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" " > $complete
         else
-                echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" \n[ \"\$3\" = \"\" ] ||  mv -n \$3 $dir_complete/" > $complete
+                echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" \n[ \"\$3\" = \"\" ] ||  mv -n \"\$3\" $dir_complete/" > $complete
         fi
         chmod +x $complete
 
