@@ -57,7 +57,7 @@ start_instance() {
         fi
         chmod +x $complete
 
-	echo -e "enable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nquiet=true\nseed-time=120\nseed-ratio=1" > $config_file
+	echo -e "enable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nquiet=true\nseed-time=120\nseed-ratio=1\nmax-tries=20" > $config_file
 	echo -e "continue=true\ninput-file=$session_file\nsave-session=$session_file\non-download-complete=$complete\nbt-hash-check-seed=true\nbt-seed-unverified=true\nbt-save-metadata=true" >> $config_file
 	option_disabled "$s" 'enable_dht' || echo "dht-file-path=$dht_file" >> $config_file
 
