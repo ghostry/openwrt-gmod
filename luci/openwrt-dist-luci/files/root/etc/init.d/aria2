@@ -51,13 +51,26 @@ start_instance() {
 	touch "$session_file"
 	complete="$config_dir/complete.sh"
         if [ "$dir_complete" = "$dir" ] ;then
-                echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" " > $complete
+                [ -f "$complete" ] || echo -e "#!/bin/sh\necho \"\$@\" " > $complete
         else
-                echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" \n[ \"\$3\" = \"\" ] ||  mv -n \"\$3\" $dir_complete/" > $complete
+                #echo -e "#!/bin/sh\necho \"\$1--- \$2--- \$3\" \n[ \"\$3\" = \"\" ] ||  mv -n \"\$3\" $dir_complete/" > $complete
+                [ -f "$complete" ] || cat << EOF > $complete
+#!/bin/sh
+#echo "\$@" >> $config_dir/complete.log
+filename=\$3;
+if [ "\$2" = "1" ] ; then
+        [ "\$3" = "" ] ||  mv -n "\$3" $dir_complete/
+elif [ \$2 -gt 1  ] ; then
+        bdirname=\$(echo "\$filename" |sed 's/$(echo "$dir" |sed 's/\//\\\//g')//'|sed 's/^\/\(.*\)\/.*/\1/g');
+        mv -n "$dir/\$bdirname" $dir_complete/
+else
+        echo 1;
+fi
+EOF
         fi
         chmod +x $complete
 
-	echo -e "enable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nquiet=true\nseed-time=120\nseed-ratio=1\nmax-tries=20" > $config_file
+	echo -e "enable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nquiet=true\nseed-time=120\nseed-ratio=1\nmax-tries=120" > $config_file
 	echo -e "continue=true\ninput-file=$session_file\nsave-session=$session_file\non-download-complete=$complete\nbt-hash-check-seed=true\nbt-seed-unverified=true\nbt-save-metadata=true" >> $config_file
 	option_disabled "$s" 'enable_dht' || echo "dht-file-path=$dht_file" >> $config_file
 
