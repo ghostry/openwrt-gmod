@@ -9,6 +9,7 @@
     luci-app-redsocks2-openssl
     luci-app-shadowvpn
     luci-app-shadowsocks-spec
+    aria2		#1.19.0版本
     chinadns
     redsocks2
     redsocks2-openssl  #自带shadowsocks客户端，dns转发
