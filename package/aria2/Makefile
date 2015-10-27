@@ -7,12 +7,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=aria2
-PKG_VERSION:=1.19.0
+PKG_VERSION:=1.19.2
 PKG_RELEASE:=1
 
+#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+#PKG_SOURCE_URL:=@SF/aria2
+#PKG_MD5SUM:=ad6eb57511a05ce823e194eb71a7e9fa
+PKG_SOURCE_URL:=https://github.com/tatsuhiro-t/aria2/releases/download/release-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=@SF/aria2
-PKG_MD5SUM:=ad6eb57511a05ce823e194eb71a7e9fa
 PKG_INSTALL:=1
 
 PKG_MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
