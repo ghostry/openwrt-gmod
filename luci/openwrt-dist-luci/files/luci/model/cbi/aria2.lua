@@ -16,8 +16,8 @@ require("luci.model.ipkg")
 
 local uci = require "luci.model.uci".cursor()
 local running = (luci.sys.call("pidof aria2c > /dev/null") == 0)
-yaaw="&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\" " .. "yaaw" .. " \" onclick=\"window.open('http://ghostry.github.io/yaaw/')\"/>"
-aria2_webui="&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\" " .. "aria2-webui" .. " \" onclick=\"window.open('http://ghostry.github.io/webui-aria2/')\"/>"
+yaaw="&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\" " .. "yaaw" .. " \" onclick=\"window.open('http://yaaw.ghostry.cn/')\"/>"
+aria2_webui="&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\" " .. "aria2-webui" .. " \" onclick=\"window.open('http://webui-aria2.ghostry.cn/')\"/>"
 
 m = Map("aria2", translate("Aria2 Settings"), translate("Aria2 is a multi-protocol &amp; multi-source download utility, here you can configure the settings.") )
 
