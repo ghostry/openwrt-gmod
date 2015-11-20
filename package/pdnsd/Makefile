@@ -37,8 +37,7 @@ TARGET_CFLAGS += -I$(STAGING_DIR)/usr/include
 
 CMAKE_OPTIONS += -DDEBUG=1
 
-CONFIGURE_ARGS += \
-		--with-cachedir=/var/pdnsd
+CONFIGURE_ARGS += --with-cachedir=/var/pdnsd
 
 define Package/pdnsd/install
 	$(INSTALL_DIR) $(1)/usr/sbin
@@ -49,7 +48,8 @@ define Package/pdnsd/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/pdnsd.init $(1)/etc/init.d/pdnsd
 	$(INSTALL_DIR) $(1)/etc
-	$(INSTALL_CONF) $(PKG_BUILD_DIR)/doc/pdnsd.conf $(1)/etc/
+	$(INSTALL_CONF) ./files/pdnsd.conf $(1)/etc/
+	$(INSTALL_DATA) ./files/pdnsd.include $(1)/etc/
 endef
 
 $(eval $(call BuildPackage,pdnsd))

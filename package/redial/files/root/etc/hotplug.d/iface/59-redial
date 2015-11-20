@@ -1,41 +1,40 @@
 #!/bin/sh
 times='0'
 for i in `seq 50`;
-    #做50次拨号循环，50次如果都没拨上也停止
+    #做50次循环
 do
     sleep 2
     wanip=$(ifconfig pppoe-wan 2> /dev/null | grep 'inet addr' | awk '{print $2}' | cut -d: -f2)
     #获取wan口ip
-    sleep 2 
-    pubip=$(wget -qO - ddns.oray.com/checkip||wget -qO - 202.105.21.208/checkip|tr -cd [0-9.])
+    pubip=$(echo $(wget -qO - ddns.oray.com/checkip||wget -qO - 202.105.21.208/checkip)|tr -cd [0-9.])
     #从网络获取公网IP
-    echo "Public IP:" $pubip
-    echo "WAN IP:" $wanip
+    date +%Y%m%d%H%M%S >> /tmp/redial.log
+    echo "Public IP:" $pubip >> /tmp/redial.log
+    echo "WAN IP:" $wanip >> /tmp/redial.log
     #显示IP
     if [ "$wanip" = "" ]||[ "$wanip" = "0.0.0.0" ]; then
     #如果获取的IP是无效，记为错误
         if [ "$times" -ge "3" ]&&[ "$wanip" = "" ]||[ "$wanip" = "0.0.0.0" ]; then
         #如果连续5次都还是没有获取到ip，重拨
             times='0'
-            ifdown wan | ifup wan 
-            sleep 2
-            continue
+            ifdown wan | ifup wan
+            break
         else
             times=`expr $times + 1`;
-            echo "error times :" $times
-            echo "waitting two seconds"
+            echo "error times :" $times >> /tmp/redial.log
+            echo "waitting two seconds" >> /tmp/redial.log
             sleep 2
         fi
     elif [ "$pubip" = "$wanip" ]||[ "$pubip" = "" ]; then
     #如果外网IP和本地IP相同，则保留IP
-        echo "dial success"
+        echo "dial success" >> /tmp/redial.log
         break
 
     else
     #如果获取的是内网IP，重拨
-        echo "Intranet IP:" $wanip 
-        echo "Redial ..."
+        echo "Intranet IP:" $wanip >> /tmp/redial.log
+        echo "Redial ..." >> /tmp/redial.log
         ifdown wan | ifup wan 
-        sleep 2
+        break
     fi
 done
