@@ -21,6 +21,7 @@
     shadowsocks-libev-spec-polarssl
     he-6in4  #为6in4更新客户端ip,配合luci-proto-ipv6使用
     redial   #如果拨号获得内网IP则自动重拨
+    pdnsd    #dns服务，可以修改ttl，支持多个上级dns，带存活测试，支持tcp查询。
 
 ==============
 
@@ -69,6 +70,8 @@
  - shadowsocks-libev-spec
 
  - redsocks2-openssl
+
+ - chinadns+redsocks2-openssl+pdnsd
 
  - chinadns+redsocks2-openssl
 
