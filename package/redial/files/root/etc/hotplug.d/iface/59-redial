@@ -7,7 +7,7 @@ do
     wanip=$(ifconfig pppoe-wan 2> /dev/null | grep 'inet addr' | awk '{print $2}' | cut -d: -f2)
     #获取wan口ip
     sleep 2 
-    pubip=$(wget -qO - ddns.oray.com/checkip|tr -cd [0-9.])
+    pubip=$(wget -qO - ddns.oray.com/checkip||wget -qO - 202.105.21.208/checkip|tr -cd [0-9.])
     #从网络获取公网IP
     echo "Public IP:" $pubip
     echo "WAN IP:" $wanip
@@ -26,7 +26,7 @@ do
             echo "waitting two seconds"
             sleep 2
         fi
-    elif [ "$pubip" = "$wanip" ]; then
+    elif [ "$pubip" = "$wanip" ]||[ "$pubip" = "" ]; then
     #如果外网IP和本地IP相同，则保留IP
         echo "dial success"
         break
