@@ -7,17 +7,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=aria2
-PKG_VERSION:=1.19.3
+PKG_VERSION:=1.25.0
 PKG_RELEASE:=1
 
-#PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-#PKG_SOURCE_URL:=@SF/aria2
-#PKG_MD5SUM:=ad6eb57511a05ce823e194eb71a7e9fa
-PKG_SOURCE_URL:=https://github.com/tatsuhiro-t/aria2/releases/download/release-$(PKG_VERSION)
+
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=https://github.com/aria2/aria2/releases/download/release-$(PKG_VERSION)/
+PKG_MD5SUM:=edc7f20ba182cec30384489fd3dfe135
 PKG_INSTALL:=1
 
-PKG_MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>
+PKG_MAINTAINER:=Imre Kaloz <kaloz@openwrt.org>, Hsing-Wang Liao <kuoruan@gmail.com>
 PKG_LICENSE:=GPLv2
 PKG_LICENSE_FILES:=COPYING
 
@@ -26,7 +25,10 @@ PKG_CONFIG_DEPENDS := \
   ARIA2_OPENSSL \
   ARIA2_GNUTLS \
   ARIA2_BITTORRENT \
-  ARIA2_METALINK
+  ARIA2_METALINK \
+  ARIA2_SFTP \
+  ARIA2_EXPAT \
+  ARIA2_LIBXML2
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -40,7 +42,7 @@ define Package/aria2
   SUBMENU:=Network
   TITLE:=lightweight download utility
   URL:=http://aria2.sourceforge.net/
-  DEPENDS:=+zlib +ARIA2_METALINK:libxml2 +libstdcpp +ARIA2_OPENSSL:libopenssl +ARIA2_GNUTLS:libgnutls
+  DEPENDS:=+zlib +ARIA2_SFTP:libssh2 +ARIA2_LIBXML2:libxml2 +ARIA2_EXPAT:libexpat +libstdcpp +ARIA2_OPENSSL:libopenssl +ARIA2_GNUTLS:libgnutls
 endef
 
 define Package/aria2/description
@@ -55,12 +57,14 @@ CONFIGURE_ARGS += \
 	$(if $(CONFIG_ARIA2_GNUTLS),--with,--without)-gnutls \
 	$(if $(CONFIG_ARIA2_BITTORRENT),--enable,--disable)-bittorrent \
 	$(if $(CONFIG_ARIA2_METALINK),--enable,--disable)-metalink \
-	$(if $(CONFIG_ARIA2_METALINK),--with,--without)-libxml2 \
+	$(if $(CONFIG_ARIA2_SFTP),--with,--without)-libssh2 \
+	$(if $(CONFIG_ARIA2_LIBXML2),--with,--without)-libxml2 \
+	$(if $(CONFIG_ARIA2_EXPAT),--with,--without)-libexpat \
 	--without-libnettle \
 	--without-libgmp \
 	--without-libgcrypt \
-	--without-libexpat \
 	--without-libcares \
+	--without-libuv \
 	--without-sqlite3 \
 	--with-libz
 
