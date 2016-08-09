@@ -2,7 +2,7 @@ base {
 	log_debug = off;
 	log_info = off;
 	log = "file:/dev/null";
-	daemon = off;
+	daemon = on;
 	redirector = iptables;
 }
 
@@ -22,7 +22,9 @@ autoproxy {
 	quick_connect_timeout = 1;
 }
 ipcache {
-	cache_size = 4;
+	cache_size = 8;
+	cache_file = "/tmp/ipcache.txt";
 	stale_time = 28800;
-	port_check = 1;
+	autosave_interval = 7200;
+	port_check = 0;
 }
