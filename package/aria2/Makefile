@@ -42,7 +42,7 @@ define Package/aria2
   SUBMENU:=Network
   TITLE:=lightweight download utility
   URL:=http://aria2.sourceforge.net/
-  DEPENDS:=+zlib +ARIA2_SFTP:libssh2 +ARIA2_LIBXML2:libxml2 +ARIA2_EXPAT:libexpat +libstdcpp +ARIA2_OPENSSL:libopenssl +ARIA2_GNUTLS:libgnutls
+  DEPENDS:=+zlib +ARIA2_SFTP:libssh2 +ARIA2_METALINK:libexpat +libstdcpp +ARIA2_OPENSSL:libopenssl +ARIA2_GNUTLS:libgnutls
 endef
 
 define Package/aria2/description
@@ -58,8 +58,8 @@ CONFIGURE_ARGS += \
 	$(if $(CONFIG_ARIA2_BITTORRENT),--enable,--disable)-bittorrent \
 	$(if $(CONFIG_ARIA2_METALINK),--enable,--disable)-metalink \
 	$(if $(CONFIG_ARIA2_SFTP),--with,--without)-libssh2 \
-	$(if $(CONFIG_ARIA2_LIBXML2),--with,--without)-libxml2 \
-	$(if $(CONFIG_ARIA2_EXPAT),--with,--without)-libexpat \
+	$(if $(CONFIG_ARIA2_METALINK),--with,--without)-libexpat \
+	--without-libxml2 \
 	--without-libnettle \
 	--without-libgmp \
 	--without-libgcrypt \
