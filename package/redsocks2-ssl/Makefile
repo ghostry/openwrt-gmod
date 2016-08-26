@@ -68,6 +68,8 @@ define Package/redsocks2/install
 	$(INSTALL_BIN) ./files/redsocks2.init $(1)/etc/init.d/redsocks2
 	$(INSTALL_DIR) $(1)/etc/redsocks2
 	$(INSTALL_DATA) ./files/redsocks2.template $(1)/etc/redsocks2/config.template
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/redsocks2.cron $(1)/etc/uci-defaults/redsocks2
 endef
 
 Package/redsocks2-openssl/install = $(Package/redsocks2/install)

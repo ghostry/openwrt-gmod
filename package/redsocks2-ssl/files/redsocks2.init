@@ -6,6 +6,7 @@ STOP=15
 SERVICE_USE_PID=1
 SERVICE_WRITE_PID=1
 SERVICE_DAEMONIZE=1
+EXTRA_COMMANDS="upignore"
 
 CONFIG=/var/etc/redsocks2.conf
 TPL=/etc/redsocks2/config.template
@@ -53,8 +54,74 @@ start_redsocks2() {
 		echo "}" >> $CONFIG
 	fi
 	service_start /usr/bin/redsocks2 -c $CONFIG || exit 1
+	iptablesrestoreignore
+}
 
-	iptables-restore -n <<-EOF
+boot() {
+	until iptables-save -t nat | grep -q "^:zone_lan_prerouting"; do
+		sleep 1
+	done
+	start
+}
+
+start() {
+	config_load redsocks2
+	config_foreach get_args redsocks2
+	[ "$enable" = 1 ] && start_redsocks2
+}
+
+stop() {
+	service_stop /usr/bin/redsocks2
+	iptables -t nat -D zone_lan_prerouting -p tcp -j REDSOCKS2 2>/dev/null
+	iptables -t nat -F REDSOCKS2 2>/dev/null && \
+	iptables -t nat -X REDSOCKS2
+}
+
+upignore() {
+	config_load redsocks2
+	config_foreach get_args redsocks2
+	[ "$enable" = 1 ] && iptablesrestoreignore
+}
+
+iptablesrestoreignore(){                                            
+	FILENAME='/tmp/redsocks2ignore';
+	ignoreName='/tmp/ignore.list';
+	wget -O- 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | awk -F\| '/CN\|ipv4/ { printf("%s/%d\n", $4, 32-log($5)/log(2)) }' > $FILENAME
+	if [ `wc -c $FILENAME | cut -d' ' -f1` -gt 5000 ];then
+		limit=8000;
+i=0;
+		echo '*nat'>$ignoreName
+		echo ':REDSOCKS2 - [0:0]'>>$ignoreName
+		echo "-A REDSOCKS2 -d $proxy_ip -j RETURN">>$ignoreName
+		while read LINE
+		do
+if [ $i -lt $limit ];then
+			echo "-A REDSOCKS2 -d $LINE -j RETURN">>$ignoreName;
+fi
+let i++;
+		done < $FILENAME
+		echo '-A REDSOCKS2 -d 0.0.0.0/8 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 10.0.0.0/8 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 100.64.0.0/10 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 127.0.0.0/8 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 169.254.0.0/16 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 172.16.0.0/12 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 192.0.0.0/24 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 192.0.2.0/24 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 192.88.99.0/24 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 192.168.0.0/16 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 198.18.0.0/15 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 198.51.100.0/24 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 203.0.113.0/24 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 224.0.0.0/4 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 240.0.0.0/4 -j RETURN'>>$ignoreName
+		echo '-A REDSOCKS2 -d 255.255.255.255 -j RETURN'>>$ignoreName
+		echo "-A REDSOCKS2 -p tcp -j REDIRECT --to-ports $local_port">>$ignoreName
+		echo '-A zone_lan_prerouting -p tcp -j REDSOCKS2'>>$ignoreName
+		echo 'COMMIT'>>$ignoreName
+		iptables-restore -n $ignoreName
+	else
+		iptables-restore -n <<-EOF
 		*nat
 		:REDSOCKS2 - [0:0]
 		-A REDSOCKS2 -d $proxy_ip -j RETURN
@@ -78,24 +145,5 @@ start_redsocks2() {
 		-A zone_lan_prerouting -p tcp -j REDSOCKS2
 		COMMIT
 EOF
-}
-
-boot() {
-	until iptables-save -t nat | grep -q "^:zone_lan_prerouting"; do
-		sleep 1
-	done
-	start
-}
-
-start() {
-	config_load redsocks2
-	config_foreach get_args redsocks2
-	[ "$enable" = 1 ] && start_redsocks2
-}
-
-stop() {
-	service_stop /usr/bin/redsocks2
-	iptables -t nat -D zone_lan_prerouting -p tcp -j REDSOCKS2 2>/dev/null
-	iptables -t nat -F REDSOCKS2 2>/dev/null && \
-	iptables -t nat -X REDSOCKS2
-}
+	fi                                  
+} 
