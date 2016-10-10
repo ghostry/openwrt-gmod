@@ -31,7 +31,7 @@ define Package/cdns
 	SUBMENU:=Network
 	TITLE:=CureDNS is an experimental tool to cure your poisoned DNS.
 	URL:=https://github.com/semigodking/cdns
-	DEPENDS:=+libevent2
+	DEPENDS:=+libevent2 +argp-standalone
 endef
 
 define Package/cdns/description
