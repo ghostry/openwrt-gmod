@@ -1,0 +1,37 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "CureDNS"
+msgstr "CureDNS"
+
+msgid "CureDNS is running"
+msgstr "CureDNS 运行中"
+
+msgid "CureDNS is not running"
+msgstr "CureDNS 未运行"
+
+msgid "General Setting"
+msgstr "基本设置"
+
+msgid "Enable"
+msgstr "启用"
+
+msgid "Disable"
+msgstr "禁用"
+
+msgid "Local Port"
+msgstr "本地端口"
+
+msgid "Local IP"
+msgstr "监听地址"
+
+msgid "Wait Timeout"
+msgstr "等待超时"
+
+msgid "DNS Server 1"
+msgstr "DNS服务器1"
+
+msgid "DNS Server 2"
+msgstr "DNS服务器2"
+
+

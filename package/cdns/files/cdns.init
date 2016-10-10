@@ -1,0 +1,41 @@
+#!/bin/sh /etc/rc.common
+
+START=90
+STOP=15
+
+SERVICE_USE_PID=1
+SERVICE_WRITE_PID=1
+SERVICE_DAEMONIZE=1
+
+CONFIG=/etc/cdns/config.json
+
+get_args() {
+	config_get_bool enable $1 enable
+	config_get local_ip $1 local_ip
+	config_get local_port $1 local_port
+	config_get server_ip1 $1 server_ip1
+	config_get server_ip2 $1 server_ip2
+	config_get timeout $1 timeout
+}
+
+start_cdns() {
+	mkdir -p $(dirname $CONFIG)
+	echo '{"global": {"daemon": true,"log": "syslog:daemon","log_debug": false},"cdns": {' > $CONFIG
+	echo '"listen_ip": "'$local_ip'",' >> $CONFIG
+        echo '"listen_port": '$local_port',' >> $CONFIG
+        echo '"timeout": '$timeout',"servers": [' >> $CONFIG
+        echo '{"ip_port": "'$server_ip1'"},' >> $CONFIG
+        echo '{"ip_port": "'$server_ip2'"}' >> $CONFIG
+        echo ']}}' >> $CONFIG
+	service_start /usr/bin/cdns -c $CONFIG || exit 1
+}
+
+start() {
+	config_load cdns
+	config_foreach get_args cdns
+	[ "$enable" = 1 ] && start_cdns
+}
+
+stop() {
+	service_stop /usr/bin/cdns
+}

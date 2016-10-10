@@ -4,12 +4,14 @@
 -------
     local-luci  #自动设置语言为中文简体,时区为东8区上海
     luci-app-aria2
+    luci-app-cdns
     luci-app-chinadns
     luci-app-redsocks2
     luci-app-redsocks2-openssl
     luci-app-shadowvpn
     luci-app-shadowsocks-spec
     aria2		#1.19.3版本
+    cdns
     chinadns
     redsocks2
     redsocks2-openssl  #自带shadowsocks客户端，dns转发
