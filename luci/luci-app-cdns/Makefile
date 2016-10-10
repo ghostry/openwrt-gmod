@@ -46,7 +46,7 @@ define Package/luci-app-cdns/postinst
 #!/bin/sh
 if [ -z "$${IPKG_INSTROOT}" ]; then
 	chmod 755 /etc/init.d/cdns >/dev/null 2>&1
-	/etc/init.d/cdns start >/dev/null 2>&1
+	/etc/init.d/cdns enable >/dev/null 2>&1
 fi
 exit 0
 endef
