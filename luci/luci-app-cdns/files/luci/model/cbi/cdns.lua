@@ -20,16 +20,19 @@ o.rmempty = false
 
 o = s:option(Value, "local_ip", translate("Local IP"))
 o.datatype = "ipaddr"
+o.placeholder = "127.0.0.1"
 o.default = '127.0.0.1' 
 o.rmempty = false
 
 o = s:option(Value, "local_port", translate("Local Port"))
 o.datatype = "port"
+o.placeholder = "1053"
 o.default = '1053' 
 o.rmempty = false
 
 o = s:option(Value, "timeout", translate("Wait Timeout"))
 o.datatype = "uinteger"
+o.placeholder = "2"
 o.default = 2
 o.rmempty = false
 
