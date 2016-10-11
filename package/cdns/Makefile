@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015 OpenWrt-dist && wongsyrone
+# Copyright (C) 2015 Gmod
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.

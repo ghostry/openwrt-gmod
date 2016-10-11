@@ -11,9 +11,9 @@
     luci-app-shadowvpn
     luci-app-shadowsocks-spec
     aria2		#1.19.3版本
-    cdns
+    BaiduPCS		#百度网盘客户端，命令行使用
+    cdns		#CureDNS
     chinadns
-    redsocks2
     redsocks2-openssl  #自带shadowsocks客户端，dns转发
     redsocks2-polarssl  #自带shadowsocks客户端，dns转发
     shadowvpn
@@ -59,6 +59,7 @@
     https://github.com/ravageralpha/my_openwrt_mod
     https://github.com/semigodking/redsocks
     https://github.com/semigodking/cdns
+    https://github.com/GangZhuo/BaiduPCS
 
 ==============
 
