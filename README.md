@@ -58,6 +58,7 @@
     https://github.com/binux/yaaw
     https://github.com/ravageralpha/my_openwrt_mod
     https://github.com/semigodking/redsocks
+    https://github.com/semigodking/cdns
 
 ==============
 
@@ -78,6 +79,7 @@
  - chinadns+redsocks2-openssl
 
 其中ChinaDNS都可以换成cdns
+
 shadowsocks-libev-spec使用的 IP 忽略列表: /etc/shadowsocks/ignore.list 每天凌晨4点自动更新，你也可以使用下面命令更新
 
     /etc/init.d/shadowsocks upignore
