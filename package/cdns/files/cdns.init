@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 
-START=90
+START=99
 STOP=15
 
 SERVICE_USE_PID=1
@@ -27,7 +27,7 @@ start_cdns() {
         echo '{"ip_port": "'$server_ip1'"},' >> $CONFIG
         echo '{"ip_port": "'$server_ip2'"}' >> $CONFIG
         echo ']}}' >> $CONFIG
-	service_start /usr/bin/cdns -c $CONFIG || exit 1
+	ping -w 1 $local_ip && service_start /usr/bin/cdns -c $CONFIG || exit 1
 }
 
 start() {
