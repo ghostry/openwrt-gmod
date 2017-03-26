@@ -10,6 +10,7 @@
     luci-app-redsocks2-openssl
     luci-app-shadowvpn
     luci-app-shadowsocks-spec
+    luci-theme-material #一个自适应界面，弥补了没有手机客户端的遗憾
     aria2		#1.19.3版本
     BaiduPCS		#百度网盘客户端，命令行使用
     cdns		#CureDNS
@@ -60,6 +61,7 @@
     https://github.com/semigodking/redsocks
     https://github.com/semigodking/cdns
     https://github.com/GangZhuo/BaiduPCS
+    https://github.com/LuttyYang/luci-theme-material
 
 ==============
 
