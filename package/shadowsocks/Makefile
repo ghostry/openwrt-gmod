@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015 OpenWrt-dist
+# Copyright (C) 2014-2017 Jian Chang <aa65535@live.com>
 #
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
@@ -8,19 +8,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shadowsocks-libev
-PKG_VERSION:=2.5.6
-PKG_SOURCE_VERSION:=135ceedb1404b8e8ce3edb2580a1027991e3e67c
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
+PKG_VERSION:=3.0.7
+PKG_RELEASE:=2
+
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/shadowsocks/shadowsocks-libev.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE_VERSION:=c11b2c08e4aecaa01f7bc4e93d311f9945d84363
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.xz
 
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
-PKG_MAINTAINER:=Max Lv <max.c.lv@gmail.com>
+PKG_MAINTAINER:=Jian Chang <aa65535@live.com>
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
@@ -33,90 +34,31 @@ define Package/shadowsocks-libev/Default
 	SECTION:=net
 	CATEGORY:=Gmod
 	SUBMENU:=Network
-	TITLE:=Lightweight Secured Socks5 Proxy $(2)
+	TITLE:=Lightweight Secured Socks5 Proxy
 	URL:=https://github.com/shadowsocks/shadowsocks-libev
-	VARIANT:=$(1)
-	DEPENDS:=$(3) +libpcre  +libpthread
+	DEPENDS:=+zlib +libev +udns-libs +libpcre +libpthread +libsodium +libmbedtls
 endef
 
-Package/shadowsocks-libev = $(call Package/shadowsocks-libev/Default,openssl,(OpenSSL),+libopenssl)
-Package/shadowsocks-libev-spec = $(call Package/shadowsocks-libev/Default,openssl,(OpenSSL),+libopenssl +resolveip)
-Package/shadowsocks-libev-polarssl = $(call Package/shadowsocks-libev/Default,polarssl,(PolarSSL),+libpolarssl)
-Package/shadowsocks-libev-spec-polarssl = $(call Package/shadowsocks-libev/Default,polarssl,(PolarSSL),+libpolarssl +resolveip)
+Package/shadowsocks-libev = $(Package/shadowsocks-libev/Default)
+Package/shadowsocks-libev-server = $(Package/shadowsocks-libev/Default)
 
 define Package/shadowsocks-libev/description
-Shadowsocks-libev is a lightweight secured scoks5 proxy for embedded devices and low end boxes.
+Shadowsocks-libev is a lightweight secured socks5 proxy for embedded devices and low end boxes.
 endef
 
-Package/shadowsocks-libev-spec/description = $(Package/shadowsocks-libev/description)
-Package/shadowsocks-libev-polarssl/description = $(Package/shadowsocks-libev/description)
-Package/shadowsocks-libev-spec-polarssl/description = $(Package/shadowsocks-libev/description)
+Package/shadowsocks-libev-server/description = $(Package/shadowsocks-libev/description)
 
-define Package/shadowsocks-libev/conffiles
-/etc/shadowsocks.json
-endef
-
-define Package/shadowsocks-libev-spec/conffiles
-/etc/config/shadowsocks
-/etc/shadowsocks/config.json
-/etc/shadowsocks/ignore.list
-endef
-
-Package/shadowsocks-libev-polarssl/conffiles = $(Package/shadowsocks-libev/conffiles)
-Package/shadowsocks-libev-spec-polarssl/conffiles = $(Package/shadowsocks-libev-spec/conffiles)
-
-define Package/shadowsocks-libev-spec/postinst
-#!/bin/sh
-if [ -z "$${IPKG_INSTROOT}" ]; then
-	uci -q batch <<-EOF >/dev/null
-		delete firewall.shadowsocks
-		set firewall.shadowsocks=include
-		set firewall.shadowsocks.type=script
-		set firewall.shadowsocks.path=/usr/share/shadowsocks/firewall.include
-		set firewall.shadowsocks.reload=1
-		commit firewall
-EOF
-fi
-exit 0
-endef
-
-Package/shadowsocks-libev-spec-polarssl/postinst = $(Package/shadowsocks-libev-spec/postinst)
-
-CONFIGURE_ARGS += --disable-ssp --disable-documentation
-
-ifeq ($(BUILD_VARIANT),polarssl)
-	CONFIGURE_ARGS += --with-crypto-library=polarssl
-endif
+CONFIGURE_ARGS += --disable-ssp --disable-documentation --disable-assert
 
 define Package/shadowsocks-libev/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-{local,redir,tunnel} $(1)/usr/bin
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_CONF) ./files/shadowsocks.conf $(1)/etc/shadowsocks.json
-	$(INSTALL_BIN) ./files/shadowsocks.init $(1)/etc/init.d/shadowsocks
 endef
 
-define Package/shadowsocks-libev-spec/install
+define Package/shadowsocks-libev-server/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-{redir,tunnel} $(1)/usr/bin
-	$(INSTALL_BIN) ./files/shadowsocks.rule $(1)/usr/bin/ss-rules
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_DATA) ./files/shadowsocks.config $(1)/etc/config/shadowsocks
-	$(INSTALL_DIR) $(1)/etc/shadowsocks
-	$(INSTALL_CONF) ./files/shadowsocks.conf $(1)/etc/shadowsocks/config.json
-	$(INSTALL_CONF) ./files/shadowsocks.list $(1)/etc/shadowsocks/ignore.list
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/shadowsocks.spec $(1)/etc/init.d/shadowsocks
-	$(INSTALL_DIR) $(1)/usr/share/shadowsocks
-	$(INSTALL_DATA) ./files/shadowsocks.include $(1)/usr/share/shadowsocks/firewall.include
-	$(INSTALL_DIR) $(1)/etc/uci-defaults
-	$(INSTALL_BIN) ./files/shadowsocks.cron $(1)/etc/uci-defaults/shadowsocks-libev-spec
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-server $(1)/usr/bin
 endef
-
-Package/shadowsocks-libev-polarssl/install = $(Package/shadowsocks-libev/install)
-Package/shadowsocks-libev-spec-polarssl/install = $(Package/shadowsocks-libev-spec/install)
 
 $(eval $(call BuildPackage,shadowsocks-libev))
-$(eval $(call BuildPackage,shadowsocks-libev-spec))
-$(eval $(call BuildPackage,shadowsocks-libev-polarssl))
-$(eval $(call BuildPackage,shadowsocks-libev-spec-polarssl))
+$(eval $(call BuildPackage,shadowsocks-libev-server))

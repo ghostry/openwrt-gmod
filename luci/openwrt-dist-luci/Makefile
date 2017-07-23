@@ -31,8 +31,6 @@ endef
 Package/luci-app-aria2 = $(call Package/openwrt-dist-luci/Default,aria2)
 Package/luci-app-chinadns = $(call Package/openwrt-dist-luci/Default,ChinaDNS)
 Package/luci-app-redsocks2 = $(call Package/openwrt-dist-luci/Default,redsocks2)
-Package/luci-app-shadowvpn = $(call Package/openwrt-dist-luci/Default,ShadowVPN)
-Package/luci-app-shadowsocks-spec = $(call Package/openwrt-dist-luci/Default,shadowsocks-libev-spec)
 
 define Package/openwrt-dist-luci/description
 	LuCI Support for $(1).
@@ -41,8 +39,6 @@ endef
 Package/luci-app-aria2/description = $(call Package/openwrt-dist-luci/description,aria2)
 Package/luci-app-chinadns/description = $(call Package/openwrt-dist-luci/description,ChinaDNS)
 Package/luci-app-redsocks2/description = $(call Package/openwrt-dist-luci/description,redsocks2)
-Package/luci-app-shadowvpn/description = $(call Package/openwrt-dist-luci/description,ShadowVPN)
-Package/luci-app-shadowsocks-spec/description = $(call Package/openwrt-dist-luci/description,shadowsocks-libev-spec)
 
 define Build/Prepare
 endef
@@ -66,8 +62,6 @@ endef
 Package/luci-app-aria2/postinst = $(call Package/openwrt-dist-luci/postinst,aria2)
 Package/luci-app-chinadns/postinst = $(call Package/openwrt-dist-luci/postinst,chinadns)
 Package/luci-app-redsocks2/postinst = $(call Package/openwrt-dist-luci/postinst,redsocks2)
-Package/luci-app-shadowvpn/postinst = $(call Package/openwrt-dist-luci/postinst,shadowvpn)
-Package/luci-app-shadowsocks-spec/postinst = $(call Package/openwrt-dist-luci/postinst,shadowsocks)
 
 define Package/openwrt-dist-luci/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
@@ -97,11 +91,7 @@ endef
 
 Package/luci-app-chinadns/install = $(call Package/openwrt-dist-luci/install,$(1),chinadns)
 Package/luci-app-redsocks2/install = $(call Package/openwrt-dist-luci/install,$(1),redsocks2)
-Package/luci-app-shadowvpn/install = $(call Package/openwrt-dist-luci/install,$(1),shadowvpn)
-Package/luci-app-shadowsocks-spec/install = $(call Package/openwrt-dist-luci/install,$(1),shadowsocks)
 
 $(eval $(call BuildPackage,luci-app-aria2))
 $(eval $(call BuildPackage,luci-app-chinadns))
 $(eval $(call BuildPackage,luci-app-redsocks2))
-$(eval $(call BuildPackage,luci-app-shadowvpn))
-$(eval $(call BuildPackage,luci-app-shadowsocks-spec))

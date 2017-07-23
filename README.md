@@ -2,14 +2,12 @@
 
 包含内容
 -------
-    local-luci  #自动设置语言为中文简体,时区为东8区上海
     luci-app-aria2
     luci-app-cdns
     luci-app-chinadns
     luci-app-redsocks2
     luci-app-redsocks2-openssl
-    luci-app-shadowvpn
-    luci-app-shadowsocks-spec
+    luci-app-shadowsocks
     luci-theme-material #一个自适应界面，弥补了没有手机客户端的遗憾
     aria2		#1.19.3版本
     BaiduPCS		#百度网盘客户端，命令行使用
@@ -17,11 +15,8 @@
     chinadns
     redsocks2-openssl  #自带shadowsocks客户端，dns转发
     redsocks2-polarssl  #自带shadowsocks客户端，dns转发
-    shadowvpn
-    shadowsocks-libev
-    shadowsocks-libev-spec
-    shadowsocks-libev-polarssl
-    shadowsocks-libev-spec-polarssl
+    shadowsocks-libev	#libmbedtls,libsodium,udns这三个是其相关内容
+    shadowsocks-libev-server
     he-6in4  #为6in4更新客户端ip,配合luci-proto-ipv6使用
     redial   #如果拨号获得内网IP则自动重拨
     pdnsd    #dns服务，可以修改ttl，支持多个上级dns，带存活测试，支持tcp查询。
@@ -31,7 +26,7 @@
 安装
 -------
 
-在你的 feeds.conf.default 文件添加下面这行
+把下面这行添加到你的 feeds.conf.default 文件首行
 
     src-git gmod https://github.com/ghostry/openwrt-gmod
 
@@ -43,47 +38,11 @@
 
 文件来源
 -------
-    https://github.com/nanpuyue/openwrt-extra
-    https://github.com/aa65535/openwrt-dist-luci
-    https://github.com/shadowsocks/openwrt-shadowsocks
-    https://github.com/aa65535/openwrt-chinadns
-    https://github.com/aa65535/openwrt-shadowvpn
-    https://github.com/aa65535/openwrt-redsocks2
-    https://github.com/wongsyrone/openwrt-1/tree/master/package/external/redsocks2
-
-==============
-
-感谢
--------
-    https://github.com/ziahamza/webui-aria2
-    https://github.com/binux/yaaw
-    https://github.com/ravageralpha/my_openwrt_mod
-    https://github.com/semigodking/redsocks
-    https://github.com/semigodking/cdns
-    https://github.com/GangZhuo/BaiduPCS
-    https://github.com/LuttyYang/luci-theme-material
+    github.com,自己编写
 
 ==============
 
 说明
 -------
-可以使用的方案有
-
- - chinadns+redsocks2+shadowsocks-libev
-
- - chinadns+shadowsocks-libev-spec
-
- - shadowsocks-libev-spec
-
- - redsocks2-openssl
-
- - chinadns+redsocks2-openssl+pdnsd
-
- - chinadns+redsocks2-openssl
-
-其中ChinaDNS都可以换成cdns
-
-shadowsocks-libev-spec使用的 IP 忽略列表: /etc/shadowsocks/ignore.list 每天凌晨4点自动更新，你也可以使用下面命令更新
-
-    /etc/init.d/shadowsocks upignore
-
+如果你要找旧文件,可以查看https://github.com/ghostry/openwrt-gmod/releases/tag/20170723
+luci-app-shadowsocks的使用方法可以查看https://github.com/shadowsocks/luci-app-shadowsocks/wiki/Use-UCI-system
