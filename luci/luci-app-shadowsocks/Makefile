@@ -25,7 +25,7 @@ define Package/luci-app-shadowsocks/Default
 	SUBMENU:=Luci
 	TITLE:=LuCI Support for shadowsocks-libev
 	PKGARCH:=all
-	DEPENDS:=+iptables $(1)
+	DEPENDS:=+iptables +shadowsocks-libev +ip +iptables-mod-tproxy $(1)
 endef
 
 Package/luci-app-shadowsocks = $(call Package/luci-app-shadowsocks/Default,+ipset)
