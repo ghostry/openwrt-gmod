@@ -17,7 +17,7 @@ define Package/tcpping
   SECTION:=net
   CATEGORY:=Gmod
   SUBMENU:=Network
-  DEPENDS:=+libnet-1.2.x
+  DEPENDS:=+libnet
   TITLE:=Ping look-alike that uses TCP SYN packets to get around firewalls and ICMP blackholes
 endef
 
