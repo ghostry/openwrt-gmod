@@ -29,7 +29,7 @@
 
 把下面这行添加到你的 feeds.conf.default 文件首行
 
-    src-git gmod https://github.com/ghostry/openwrt-gmod
+    src-git gmod https://github.com/ghostry/openwrt-gmod;for-15.05
 
 然后运行
 
