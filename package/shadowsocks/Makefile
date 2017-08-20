@@ -7,13 +7,13 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=shadowsocks-libev
-PKG_VERSION:=3.0.7
-PKG_RELEASE:=2
+PKG_NAME:=shadowsocks-libev-new
+PKG_VERSION:=3.0.8
+PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/shadowsocks/shadowsocks-libev.git
-PKG_SOURCE_VERSION:=c11b2c08e4aecaa01f7bc4e93d311f9945d84363
+PKG_SOURCE_VERSION:=f1dd1354a9e0bf4a364773be3385e12de571d008
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.xz
 
@@ -30,27 +30,27 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/shadowsocks-libev/Default
+define Package/shadowsocks-libev-new/Default
 	SECTION:=net
 	CATEGORY:=Gmod
 	SUBMENU:=Network
-	TITLE:=Lightweight Secured Socks5 Proxy
+	TITLE:=Lightweight Secured Socks5 Proxy $(PKG_VERSION)
 	URL:=https://github.com/shadowsocks/shadowsocks-libev
 	DEPENDS:=+zlib +libev +udns-libs +libpcre +libpthread +libsodium +libmbedtls
 endef
 
-Package/shadowsocks-libev = $(Package/shadowsocks-libev/Default)
-Package/shadowsocks-libev-server = $(Package/shadowsocks-libev/Default)
+Package/shadowsocks-libev-new = $(Package/shadowsocks-libev-new/Default)
+Package/shadowsocks-libev-server = $(Package/shadowsocks-libev-new/Default)
 
-define Package/shadowsocks-libev/description
+define Package/shadowsocks-libev-new/description
 Shadowsocks-libev is a lightweight secured socks5 proxy for embedded devices and low end boxes.
 endef
 
-Package/shadowsocks-libev-server/description = $(Package/shadowsocks-libev/description)
+Package/shadowsocks-libev-server/description = $(Package/shadowsocks-libev-new/description)
 
 CONFIGURE_ARGS += --disable-ssp --disable-documentation --disable-assert
 
-define Package/shadowsocks-libev/install
+define Package/shadowsocks-libev-new/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-{local,redir,tunnel} $(1)/usr/bin
 endef
@@ -60,5 +60,5 @@ define Package/shadowsocks-libev-server/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/ss-server $(1)/usr/bin
 endef
 
-$(eval $(call BuildPackage,shadowsocks-libev))
+$(eval $(call BuildPackage,shadowsocks-libev-new))
 $(eval $(call BuildPackage,shadowsocks-libev-server))
