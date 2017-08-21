@@ -157,5 +157,8 @@ msgstr "不可用 - iptables-mod-tproxy 或 ip 缺失"
 msgid "Zone LAN"
 msgstr "内网区域"
 
+msgid "Default Return"
+msgstr "默认直连"
+
 msgid "Zone WAN"
 msgstr "外网区域"
