@@ -21,7 +21,6 @@ define Package/n2n/Default
   SUBMENU:=Network
   TITLE:=N2Nv2
   URL:=http://www.ntop.org/n2n/
-  SUBMENU:=VPN
   DEPENDS:=+kmod-tun +resolveip +libopenssl
 endef
 
