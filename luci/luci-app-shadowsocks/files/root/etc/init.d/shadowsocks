@@ -118,6 +118,9 @@ start_rules() {
 		-a "$(config_foreach get_lan_hosts lan_hosts)" \
 		-e "$(uci_get_by_type access_control ipt_ext)" \
 		$(get_arg_out) $(get_arg_udp)
+	case "$(uci_get_by_type access_control default_return)" in
+		1|on|true|yes|enabled) sed -i "s/-A SS_SPEC_WAN_AC -j SS_SPEC_WAN_FW/-A SS_SPEC_WAN_AC -j RETURN/g" /var/etc/shadowsocks.include;;
+	esac
 }
 
 rules() {
