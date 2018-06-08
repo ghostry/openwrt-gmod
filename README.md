@@ -28,7 +28,7 @@
 
 把下面这行添加到你的 feeds.conf.default 文件首行
 
-    src-git gmod https://github.com/ghostry/openwrt-gmod;lede-17.01
+    src-git gmod https://github.com/ghostry/openwrt-gmod;openwrt-18.06
 
 然后运行
 
