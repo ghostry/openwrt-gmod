@@ -28,6 +28,8 @@ define Package/luci-proto-n2n/install
 	$(INSTALL_DATA) ./files/cbi/proto_n2n.lua $(1)/usr/lib/lua/luci/model/cbi/admin_network
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/network
 	$(INSTALL_DATA) ./files/network/proto_n2n.lua $(1)/usr/lib/lua/luci/model/network
+   $(INSTALL_DIR) $(1)/lib/netifd/proto
+   $(INSTALL_BIN) ./files/n2n.sh $(1)/lib/netifd/proto
 endef
 
 define Build/Compile

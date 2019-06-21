@@ -50,8 +50,6 @@ endef
 define Package/n2n-edge/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/edge $(1)/usr/sbin/
-	$(INSTALL_DIR) $(1)/lib/netifd/proto
-	$(INSTALL_BIN) ./files/n2n.sh $(1)/lib/netifd/proto
 endef
 
 define Package/n2n-supernode/conffiles

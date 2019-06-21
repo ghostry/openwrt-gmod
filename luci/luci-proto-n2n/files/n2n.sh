@@ -57,7 +57,7 @@ proto_n2n_teardown() {
 
         proto_init_update "$device" 0
         proto_kill_command "$1"
-        kill -SIGKILL `cat /var/run/${device}.pid` >/dev/null 2>&1
+        kill -SIGKILL `ps|grep edge|grep ${device}|awk '{print $1}'` >/dev/null 2>&1
         proto_send_update "$cfg"
 }
 
