@@ -58,11 +58,11 @@ gateway.datatype = "ip4addr"
 if luci.model.network:has_ipv6() then
   ip6addr = section:taboption("general", Value, "ip6addr", translate("IPv6 address"))
   ip6addr.datatype = "ip6addr"
-  
+
   ip6prefixlen = section:taboption("general", Value, "ip6prefixlen", translate("IPv6 prefix length"))
   ip6prefixlen.placeholder = "64"
   ip6prefixlen.datatype = "max(128)"
-  
+
   ip6gw = section:taboption("general", Value, "ip6gw", translate("IPv6 gateway"))
   ip6gw.datatype = "ip6addr"
 end
@@ -78,6 +78,10 @@ luci.tools.proto.opt_macaddr(section, ifc, translate("Override MAC address"), cf
 mtu = section:taboption("advanced", Value, "mtu", translate("Override MTU"))
 mtu.placeholder = "1440"
 mtu.datatype = "max(9200)"
+
+metric = section:taboption("advanced", Value, "metric", translate("Metric"))
+metric.placeholder = "0"
+metric.datatype = "max(9200)"
 
 localport = section:taboption("advanced", Value, "localport", translate("Bind local port"))
 localport.datatype = "port"

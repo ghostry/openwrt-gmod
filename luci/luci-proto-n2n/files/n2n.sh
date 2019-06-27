@@ -9,8 +9,8 @@
 proto_n2n_setup() {
         local cfg="$1"
         local device="n2n-$cfg"
-        local server port server2 port2 mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
-        json_get_vars server port server2 port2 mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
+        local server port server2 port2 mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose metric
+        json_get_vars server port server2 port2 mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose metric
 
         proto_run_command "$cfg" /usr/sbin/edge -f \
                           -d "$device" \
@@ -41,11 +41,11 @@ proto_n2n_setup() {
         fi
 
         [ -n "$gateway" ] && {
-                proto_add_ipv4_route 0.0.0.0 0 "$gateway"
+                proto_add_ipv4_route 0.0.0.0 0 "$gateway" 0 "$metric"
         }
 
         [ -n "$ip6gw" ] && {
-                proto_add_ipv6_route "::" 0 "$ip6gw"
+                proto_add_ipv6_route "::" 0 "$ip6gw" "$metric"
         }
 
         proto_send_update "$cfg"
