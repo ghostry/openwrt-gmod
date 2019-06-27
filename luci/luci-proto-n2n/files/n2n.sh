@@ -41,7 +41,7 @@ proto_n2n_setup() {
         fi
 
         [ -n "$gateway" ] && {
-                proto_add_ipv4_route 0.0.0.0 0 "$gateway" 0 "$metric"
+                proto_add_ipv4_route 0.0.0.0 0 "$gateway" "" "$metric"
         }
 
         [ -n "$ip6gw" ] && {
