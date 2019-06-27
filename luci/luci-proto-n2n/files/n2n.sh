@@ -84,6 +84,7 @@ proto_n2n_init_config() {
         proto_config_add_boolean "dynamic"
         proto_config_add_int "localport"
         proto_config_add_int "mgmtport"
+        proto_config_add_int "metric"
         proto_config_add_boolean "multicast"
         proto_config_add_boolean "verbose"
 }
