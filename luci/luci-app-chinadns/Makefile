@@ -28,17 +28,13 @@ define Package/openwrt-dist-luci/Default
 	DEPENDS:=+luci +$(1)
 endef
 
-Package/luci-app-aria2 = $(call Package/openwrt-dist-luci/Default,aria2)
 Package/luci-app-chinadns = $(call Package/openwrt-dist-luci/Default,ChinaDNS)
-Package/luci-app-redsocks2 = $(call Package/openwrt-dist-luci/Default,redsocks2)
 
 define Package/openwrt-dist-luci/description
 	LuCI Support for $(1).
 endef
 
-Package/luci-app-aria2/description = $(call Package/openwrt-dist-luci/description,aria2)
 Package/luci-app-chinadns/description = $(call Package/openwrt-dist-luci/description,ChinaDNS)
-Package/luci-app-redsocks2/description = $(call Package/openwrt-dist-luci/description,redsocks2)
 
 define Build/Prepare
 endef
@@ -59,9 +55,7 @@ fi
 exit 0
 endef
 
-Package/luci-app-aria2/postinst = $(call Package/openwrt-dist-luci/postinst,aria2)
 Package/luci-app-chinadns/postinst = $(call Package/openwrt-dist-luci/postinst,chinadns)
-Package/luci-app-redsocks2/postinst = $(call Package/openwrt-dist-luci/postinst,redsocks2)
 
 define Package/openwrt-dist-luci/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
@@ -74,24 +68,6 @@ define Package/openwrt-dist-luci/install
 	$(INSTALL_BIN) ./files/root/etc/uci-defaults/luci-$(2) $(1)/etc/uci-defaults/luci-$(2)
 endef
 
-define Package/luci-app-aria2/install
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-	$(INSTALL_DATA) ./files/luci/controller/aria2.lua $(1)/usr/lib/lua/luci/controller/aria2.lua
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
-	$(INSTALL_DATA) ./files/luci/i18n/aria2.*.lmo $(1)/usr/lib/lua/luci/i18n
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
-	$(INSTALL_DATA) ./files/luci/model/cbi/aria2.lua $(1)/usr/lib/lua/luci/model/cbi/aria2.lua
-	$(INSTALL_DIR) $(1)/etc/uci-defaults
-	$(INSTALL_BIN) ./files/root/etc/uci-defaults/luci-aria2 $(1)/etc/uci-defaults/luci-aria2
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_DATA) ./files/root/etc/config/aria2 $(1)/etc/config/aria2
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/root/etc/init.d/aria2 $(1)/etc/init.d/aria2
-endef
-
 Package/luci-app-chinadns/install = $(call Package/openwrt-dist-luci/install,$(1),chinadns)
-Package/luci-app-redsocks2/install = $(call Package/openwrt-dist-luci/install,$(1),redsocks2)
 
-$(eval $(call BuildPackage,luci-app-aria2))
 $(eval $(call BuildPackage,luci-app-chinadns))
-$(eval $(call BuildPackage,luci-app-redsocks2))
