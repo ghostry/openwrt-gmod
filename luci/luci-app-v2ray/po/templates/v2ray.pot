@@ -1,0 +1,575 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: luasrc/model/cbi/v2ray/main.lua:118
+msgid "<code>transport</code> field in top level configuration, JSON string"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/reverse.lua:18
+msgid "A list of bridges, format: <code>tag|domain</code>. eg: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/reverse.lua:21
+msgid "A list of portals, format: <code>tag|domain</code>. eg: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:34
+msgid "A list of static addresses, format: <code>domain|address</code>. eg: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:52
+msgid "A platform for building proxies to bypass network restrictions."
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:44 luasrc/model/cbi/v2ray/about.lua:16
+msgid "About"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:86
+msgid "Access log file"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:41
+msgid "Add DNS servers here"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:38
+msgid "Add policy levels here"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:91
+msgid "Add routing balancers here"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:51
+msgid "Add routing rules here"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:48
+msgid "Address"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:45
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:36
+#: luasrc/model/cbi/v2ray/inbound-list.lua:25
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:36
+#: luasrc/model/cbi/v2ray/outbound-list.lua:25
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:22
+#: luasrc/model/cbi/v2ray/routing.lua:66
+msgid "Alias"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:117
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:122
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:125
+msgid "Allocate"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:39
+msgid "An IP address for sending traffic out."
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:45
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:36
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:36
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:22
+msgid "Any custom string"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:50
+msgid "Attrs"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:19
+msgid "Author: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:54
+msgid "Balancer tag"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:46
+msgid "Balancers"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/reverse.lua:17
+msgid "Bridges"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:68
+msgid "Buffer Size"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:46
+msgid "Buffer size"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:45
+msgid "Can't get V2Ray version"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:30
+msgid "Client IP"
+msgstr ""
+
+#: luasrc/view/v2ray/status_header.htm:12
+msgid "Collecting data..."
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:125
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:100
+msgid "Concurrency"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:73
+msgid "Config file"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:63
+msgid "Connection Idle"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:30
+msgid "Connection idle"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:36
+msgid "Current Config File: %s"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:30 luasrc/model/cbi/v2ray/dns.lua:19
+msgid "DNS"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:36
+msgid "DNS Servers"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:41
+msgid "DNS server"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:63
+msgid "DNS traffic"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:79
+msgid "Debug"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:113
+msgid "Dest override"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:69
+msgid ""
+"Directory where geoip.dat and geosite.dat files are, default: same directory "
+"as V2Ray file."
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:28
+msgid "Domain"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:36
+msgid "Domain resolution strategy"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:54
+msgid "Domains"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:32
+msgid "Donate: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:38
+msgid "Downlink only"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:13
+msgid "Edit Inbound"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:13
+msgid "Edit Outbound"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:10
+msgid "Edit Policy Level"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:10
+msgid "Edit Routing Rule"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:25
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:57
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:111
+#: luasrc/model/cbi/v2ray/main.lua:62 luasrc/model/cbi/v2ray/main.lua:112
+#: luasrc/model/cbi/v2ray/main.lua:115
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:98
+#: luasrc/model/cbi/v2ray/policy.lua:26 luasrc/model/cbi/v2ray/reverse.lua:14
+#: luasrc/model/cbi/v2ray/routing.lua:34
+msgid "Enabled"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:82
+msgid "Error"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:93
+msgid "Error log file"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:14
+msgid "Failed to open file."
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:53
+msgid "For more information, please visit: %s"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:19 luasrc/model/cbi/v2ray/main.lua:50
+msgid "Global Settings"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:26
+#: luasrc/model/cbi/v2ray/policy.lua:58
+msgid "Handshake"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:33
+msgid "Hosts"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:30
+msgid "IP"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:23 luasrc/model/cbi/v2ray/inbound-list.lua:8
+msgid "Inbound"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:76
+msgid "Inbound Tag"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:100
+msgid "Inbound proxies"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:43
+msgid "Inbound tag"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:80
+msgid "Info"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:36
+msgid "Invalid V2Ray file"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:24
+msgid "Latest: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:22
+#: luasrc/model/cbi/v2ray/policy.lua:53
+msgid "Level"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:29
+msgid "Levels"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:39
+#: luasrc/model/cbi/v2ray/inbound-list.lua:30
+msgid "Listen"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:77
+msgid "Log level"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:18
+msgid "LuCI support for V2Ray."
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:98
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:100
+msgid "Mux"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:35
+#: luasrc/model/cbi/v2ray/routing.lua:86
+msgid "Network"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-list.lua:53
+msgid "No"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:75 luasrc/model/cbi/v2ray/main.lua:83
+msgid "None"
+msgstr ""
+
+#: luasrc/view/v2ray/status_header.htm:25
+msgid "Not Running"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:27 luasrc/model/cbi/v2ray/outbound-list.lua:8
+msgid "Outbound"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:81
+msgid "Outbound Tag"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:106
+msgid "Outbound proxies"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:52
+msgid "Outbound tag"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:38 luasrc/model/cbi/v2ray/policy.lua:20
+msgid "Policy"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:38
+msgid "Policy Level"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:51
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:45
+#: luasrc/model/cbi/v2ray/inbound-list.lua:35
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:32
+msgid "Port"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/reverse.lua:20
+msgid "Portals"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:49
+#: luasrc/model/cbi/v2ray/inbound-list.lua:40
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:45
+#: luasrc/model/cbi/v2ray/outbound-list.lua:35
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:45
+msgid "Protocol"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:89
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:74
+msgid "Protocol transport options, JSON string"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:67
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:54
+msgid "Protocol-specific settings, JSON string"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:96
+msgid "Proxy settings"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:122
+msgid "Refresh"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:28
+msgid "Report Bugs: %s"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:41 luasrc/model/cbi/v2ray/reverse.lua:8
+msgid "Reverse"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:34 luasrc/model/cbi/v2ray/routing.lua:28
+msgid "Routing"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:91
+msgid "Routing Balancer"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:51
+msgid "Routing Rule"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:41
+msgid "Rules"
+msgstr ""
+
+#: luasrc/view/v2ray/status_header.htm:24
+msgid "Running"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:36
+msgid "Select DNS servers to use"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:29
+msgid "Select policy levels"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:46
+msgid "Select routing balancers to use"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:41
+msgid "Select routing rules to use"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing.lua:98
+msgid "Selector"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/outbound-list.lua:30
+msgid "Send Through"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:39
+msgid "Send through"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:67
+#: luasrc/model/cbi/v2ray/main.lua:118
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:54
+msgid "Settings"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:111
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:113
+msgid "Sniffing"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:39
+msgid "Source"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/about.lua:20
+msgid "Source: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:112
+msgid "Stats"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:36
+msgid "Stats inbound downlink"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:34
+msgid "Stats inbound uplink"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:44
+msgid "Stats user downlink"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:42
+msgid "Stats user uplink"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:117
+msgid "Strategy"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:89
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:74
+msgid "Stream settings"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy.lua:34 luasrc/model/cbi/v2ray/policy.lua:36
+msgid "System"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/dns.lua:28
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:109
+#: luasrc/model/cbi/v2ray/inbound-list.lua:45
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:94
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:96
+#: luasrc/model/cbi/v2ray/outbound-list.lua:40
+#: luasrc/model/cbi/v2ray/routing.lua:95
+msgid "Tag"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-list.lua:50
+msgid "Transparent Proxy"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:57
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:60
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:63
+msgid "Transparent proxy"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:115 luasrc/model/cbi/v2ray/main.lua:118
+msgid "Transport"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:25
+#: luasrc/model/cbi/v2ray/routing.lua:71
+msgid "Type"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:60
+msgid "UDP traffic"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:34
+msgid "Uplink only"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:73
+msgid "Use custom config file"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:41
+msgid "User"
+msgstr ""
+
+#: luasrc/controller/v2ray.lua:16 luasrc/model/cbi/v2ray/about.lua:16
+#: luasrc/model/cbi/v2ray/dns.lua:19
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:13
+#: luasrc/model/cbi/v2ray/inbound-list.lua:8 luasrc/model/cbi/v2ray/main.lua:50
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:13
+#: luasrc/model/cbi/v2ray/outbound-list.lua:8
+#: luasrc/model/cbi/v2ray/policy-level-detail.lua:10
+#: luasrc/model/cbi/v2ray/policy.lua:20 luasrc/model/cbi/v2ray/reverse.lua:8
+#: luasrc/model/cbi/v2ray/routing-rule-detail.lua:10
+#: luasrc/model/cbi/v2ray/routing.lua:28
+msgid "V2Ray"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:69
+msgid "V2Ray asset location"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:65
+msgid "V2Ray file"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:47
+msgid "Version: %s"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/main.lua:81
+msgid "Warning"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-list.lua:53
+msgid "Yes"
+msgstr ""
+
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:74
+#: luasrc/model/cbi/v2ray/inbound-detail.lua:94
+#: luasrc/model/cbi/v2ray/main.lua:127
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:59
+#: luasrc/model/cbi/v2ray/outbound-detail.lua:79
+msgid "invalid JSON"
+msgstr ""
