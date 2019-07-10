@@ -43,6 +43,7 @@
 .col-8{flex:8 8 240px!important;-webkit-flex:8 8 240px!important;}
 .col-9{flex:9 9 270px!important;-webkit-flex:9 9 270px!important;}
 .col-10{flex:10 10 300px!important;-webkit-flex:10 10 300px!important;}
+#maincontent>.container{padding:2rem;}
 .cbi-button-up,.cbi-button-down,.cbi-value-helpicon,.showSide,.main > .loading > span{font-family:'icomoon'!important;speak:none;font-style:normal!important;font-weight:normal!important;font-variant:normal!important;text-transform:none!important;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 *{margin:0;padding:0;box-sizing:border-box;}
 .h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{font-family:inherit;font-weight:400;line-height:1.1;color:inherit;}
@@ -106,6 +107,7 @@ h1{font-size:2rem;padding-bottom:10px;border-bottom:1px solid #eee;}
 h2{margin:2rem 0 0 0;font-size:1.8rem;padding-bottom:10px;border-bottom:1px solid #eee;}
 h3{margin:2rem 0 0 0;font-size:1.4rem;padding-bottom:10px;}
 h4{margin:2rem 0 0 0;font-size:1.2rem;padding-bottom:10px;}
+.cbi-map{margin:1rem 0 0 0;padding:2rem;}
 .cbi-section{margin:1rem 0 0 0;padding:2rem;border:0;font-weight:normal;font-style:normal;line-height:1;font-family:inherit;min-width:inherit;border-radius:0;box-shadow:0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12);-webkit-overflow-scrolling:touch;}
 .cbi-map-descr + fieldset{margin-top:1rem;}
 .cbi-section > legend{display:none!important;}
