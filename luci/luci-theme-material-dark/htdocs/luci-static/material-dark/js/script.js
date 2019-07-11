@@ -17,9 +17,9 @@
  *
  *  Licensed to the public under the Apache License 2.0
  */
-(function ($) {
-    $(".main > .loading").fadeOut();
-
+(function($) {
+    $(".loading").fadeOut();
+    document.body.style.overflow = "auto";
     /**
      * trim text, Remove spaces, wrap
      * @param text
@@ -34,16 +34,16 @@
     var mainNodeName = undefined;
 
     var nodeUrl = "";
-    (function(node){
-        if (node[0] == "admin"){
+    (function(node) {
+        if (node[0] == "admin") {
             luciLocation = [node[1], node[2]];
-        }else{
+        } else {
             luciLocation = node;
         }
 
-        for(var i in luciLocation){
+        for (var i in luciLocation) {
             nodeUrl += luciLocation[i];
-            if (i != luciLocation.length - 1){
+            if (i != luciLocation.length - 1) {
                 nodeUrl += "/";
             }
         }
@@ -60,9 +60,9 @@
             return true;
         }
 
-        $(".main > .main-left > .nav > .slide > .menu").each(function () {
+        $(".main > .main-left > .nav > .slide > .menu").each(function() {
             var ulNode = $(this);
-            ulNode.next().find("a").each(function () {
+            ulNode.next().find("a").each(function() {
                 var that = $(this);
                 var href = that.attr("href");
 
@@ -82,7 +82,7 @@
     /**
      * menu click
      */
-    $(".main > .main-left > .nav > .slide > .menu").click(function () {
+    $(".main > .main-left > .nav > .slide > .menu").click(function() {
         var ul = $(this).next(".slide-menu");
         var menu = $(this);
         if (!ul.is(":visible")) {
@@ -90,7 +90,7 @@
             ul.addClass("active");
             ul.stop(true).slideDown("fast");
         } else {
-            ul.stop(true).slideUp("fast", function () {
+            ul.stop(true).slideUp("fast", function() {
                 menu.removeClass("active");
                 ul.removeClass("active");
             });
@@ -101,7 +101,7 @@
     /**
      * hook menu click and add the hash
      */
-    $(".main > .main-left > .nav > .slide > .slide-menu > li > a").click(function () {
+    $(".main > .main-left > .nav > .slide > .slide-menu > li > a").click(function() {
         if (lastNode != undefined) lastNode.removeClass("active");
         $(this).parent().addClass("active");
         $(".main > .loading").fadeIn("fast");
@@ -111,7 +111,7 @@
     /**
      * fix menu click
      */
-    $(".main > .main-left > .nav > .slide > .slide-menu > li").click(function () {
+    $(".main > .main-left > .nav > .slide > .slide-menu > li").click(function() {
         if (lastNode != undefined) lastNode.removeClass("active");
         $(this).addClass("active");
         $(".main > .loading").fadeIn("fast");
@@ -134,11 +134,11 @@
     /**
      * hook other "A Label" and add hash to it.
      */
-    $("#maincontent > .container").find("a").each(function () {
+    $("#maincontent > .container").find("a").each(function() {
         var that = $(this);
         var onclick = that.attr("onclick");
         if (onclick == undefined || onclick == "") {
-            that.click(function () {
+            that.click(function() {
                 var href = that.attr("href");
                 if (href.indexOf("#") == -1) {
                     $(".main > .loading").fadeIn("fast");
@@ -152,7 +152,7 @@
      * Sidebar expand
      */
     var showSide = false;
-    $(".showSide").click(function () {
+    $(".showSide").click(function() {
         if (showSide) {
             $(".darkMask").stop(true).fadeOut("fast");
             $(".main-left").stop(true).animate({
@@ -171,7 +171,7 @@
     });
 
 
-    $(".darkMask").click(function () {
+    $(".darkMask").click(function() {
         if (showSide) {
             showSide = false;
             $(".darkMask").stop(true).fadeOut("fast");
@@ -182,7 +182,7 @@
         }
     });
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         if ($(window).width() > 921) {
             $(".main-left").css("width", "");
             $(".darkMask").stop(true);
@@ -194,14 +194,14 @@
     /**
      * fix legend position
      */
-    $("legend").each(function () {
+    $("legend").each(function() {
         var that = $(this);
         that.after("<span class='panel-title'>" + that.text() + "</span>");
     });
 
-    $(".cbi-section-table-titles, .cbi-section-table-descr, .cbi-section-descr").each(function () {
+    $(".cbi-section-table-titles, .cbi-section-table-descr, .cbi-section-descr").each(function() {
         var that = $(this);
-        if (that.text().trim() == ""){
+        if (that.text().trim() == "") {
             that.css("display", "none");
         }
     });
@@ -216,7 +216,7 @@
         switch (mainNodeName) {
             case "node-status-system_log":
             case "node-status-kernel_log":
-                $("#syslog").focus(function () {
+                $("#syslog").focus(function() {
                     $("#syslog").blur();
                     $(".main-right").focus();
                     $(".main-right").blur();
@@ -232,5 +232,17 @@
                 break;
         }
     }
-
+    var mystyle = $.cookie('material_dark_theme');
+    if (mystyle != undefined) {
+        $("link[name='theme'][title='" + mystyle + "']").removeAttr("disabled");
+        $("link[name='theme'][title!='" + mystyle + "']").attr("disabled", "disabled");
+        $('#' + mystyle).addClass("cur").siblings().removeClass("cur");
+    }
+    $('#themes .indicator').click(function(event) {
+        var style = $(this).attr("id");
+        $("link[name='theme'][title='" + style + "']").removeAttr("disabled");
+        $("link[name='theme'][title!='" + style + "']").attr("disabled", "disabled");
+        $(this).addClass("cur").siblings().removeClass("cur");
+        $.cookie('material_dark_theme', style);
+    });
 })(jQuery);

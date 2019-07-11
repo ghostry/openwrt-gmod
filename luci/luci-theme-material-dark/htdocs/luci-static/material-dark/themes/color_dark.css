@@ -1,0 +1,37 @@
+/* 主色 */
+body{background-color:#000;}
+
+/* 顶栏 */
+header{background:#000;color:white;box-shadow:0 2px 5px rgba(255,255,255,.26);}
+
+/* 左侧菜单 */
+.main-left{background-color:#222;}
+.main > .main-left > .nav > li a{color:#ccc;}
+.main > .main-left > .nav > .slide:hover{background:none;}
+.main > .main-left > .nav > .slide > .slide-menu > .active > a{color:white;}
+.main > .main-left > .nav > li:hover,.main > .main-left > .nav > .slide > .menu:hover,.main > .main-left > .nav > .slide > .slide-menu > .active,.main > .main-left > .nav > .slide > .slide-menu > li:hover,.main > .main-left > .nav > .slide > .slide-menu > .active:hover{background-color:#0099CC;}
+
+/* 面板 */
+#maincontent>.container{background:#222;box-shadow:0 2px 5px rgba(255,255,255,.26);color:#eee}
+.cbi-tabmenu > li[class~="cbi-tab"]{background-color:#ddd;}
+.cbi-section{box-shadow:0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12);background:#ccc;color:#111;}
+.cbi-map{background:#ccc;color:#111;}
+h2{border-bottom:1px solid #ddd;}
+.tabs{background-color:#eee;}
+
+/* 列表 */
+.cbi-rowstyle-1{background-color:#ccc;}
+.cbi-rowstyle-2{background-color:#ddd;}
+.cbi-section-table-row{background:#ddd;box-shadow:0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12);}
+
+/* 按钮 */
+.cbi-page-actions .cbi-button-apply,.cbi-section-actions .cbi-button-edit,.cbi-button-edit.important,.cbi-button-apply.important,.cbi-button-reload.important,.cbi-button-action.important{color:#fff;background-color:#337ab7;}
+.cbi-page-actions .cbi-button-save,.cbi-button-add.important,.cbi-button-save.important,.cbi-button-positive.important{color:#fff;background-color:#5bc0de;}
+.cbi-button-remove.important,.cbi-button-reset.important,.cbi-button-negative.important{color:#fff;background-color:#d9534f;}
+.cbi-button-find,.cbi-button-link,.cbi-button-up,.cbi-button-down,.cbi-button-neutral{border:1px solid #bfbfbf;background-color:transparent;}
+.cbi-button-edit,.cbi-button-apply,.cbi-button-reload,.cbi-button-action{color:#2e6da4;border:1px solid #2e6da4;background-color:transparent;}
+.cbi-page-actions .cbi-button-apply + .cbi-button-save,.cbi-button-add,.cbi-button-save,.cbi-button-positive{color:#46b8da;border:1px solid #46b8da;background-color:transparent;}
+.cbi-section-remove > .cbi-button,.cbi-button-remove,.cbi-button-reset,.cbi-button-negative{color:#d43f3a;border:1px solid #d43f3a;background-color:transparent;}
+
+/* 表单 */
+textarea{color:initial;background-color:#eee;border-color:rgb(169,169,169);border-image:initial;}
