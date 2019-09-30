@@ -1,0 +1,69 @@
+include $(TOPDIR)/rules.mk
+
+
+PKG_NAME:=n2n
+PKG_VERSION:=2.4
+PKG_RELEASE:=$(PKG_VERSION)
+PKG_SOURCE_URL:=https://github.com/ntop/n2n/archive/
+PKG_MD5SUM:=807c465be11615d2e08a8bd85244b95c
+PKG_LICENSE:=GPLv3
+PKG_LICENSE_FILES:=LICENSE
+
+PKG_SOURCE:=$(PKG_VERSION).tar.gz
+
+include $(INCLUDE_DIR)/package.mk
+
+define Package/n2n/Default
+  SECTION:=net
+  CATEGORY:=Gmod
+  SUBMENU:=Network
+  TITLE:=N2Nv2
+  URL:=http://www.ntop.org/n2n/
+  DEPENDS:=+kmod-tun +resolveip +libopenssl
+endef
+
+define Package/n2n-edge
+$(call Package/n2n/Default)
+TITLE+= client (edge)
+endef
+
+define Package/n2n-supernode
+$(call Package/n2n/Default)
+TITLE+= server (supernode)
+endef
+
+define Package/n2n-edge/description
+N2Nv2 client (edge).
+endef
+
+define Package/n2n-supernode/description
+N2Nv2 server (supernode).
+endef
+
+define Build/Compile
+		$(MAKE) -C $(PKG_BUILD_DIR) \
+		$(TARGET_CONFIGURE_OPTS) \
+		CFLAGS="$(TARGET_CFLAGS)" \
+		INSTALL_PROG=":"
+endef
+
+define Package/n2n-edge/install
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/edge $(1)/usr/sbin/
+endef
+
+define Package/n2n-supernode/conffiles
+/etc/config/n2n
+endef
+
+define Package/n2n-supernode/install
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/supernode $(1)/usr/sbin/
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/n2n.init $(1)/etc/init.d/n2n
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) ./files/n2n.config $(1)/etc/config/n2n
+endef
+
+$(eval $(call BuildPackage,n2n-edge))
+$(eval $(call BuildPackage,n2n-supernode))
