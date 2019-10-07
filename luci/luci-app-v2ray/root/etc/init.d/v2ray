@@ -253,6 +253,7 @@ add_v2ray_rules() {
 		output="-A OUTPUT -p tcp -j V2RAY"
 	else
 		output="-A OUTPUT -p tcp -m set --match-set $proxy_ipset dst -j V2RAY"
+		ipset create $proxy_ipset hash:ip
 	fi
 
 	# ToutyRater/v2ray-guide#24
