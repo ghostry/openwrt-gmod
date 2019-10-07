@@ -27,7 +27,8 @@ o.rmempty = false
 
 o = s1:option(Value, "tag", translate("Tag"))
 
-o = s1:option(Value, "client_ip", translate("Client IP"))
+o = s1:option(Value, "client_ip", translate("Client IP"),
+	"<a href=\"https://www.icanhazip.com\" target=\"_blank\">%s</a>" % translate("Get my public IP address"))
 o.datatype = "ipaddr"
 
 o = s1:option(DynamicList, "hosts", translate("Hosts"),
@@ -50,6 +51,7 @@ o.datatype = "ipaddr"
 
 o = s2:option(Value, "port", translate("Port"))
 o.datatype = "port"
+o.placeholder = '53'
 
 o = s2:option(DynamicList, "domains", translate("Domains"))
 

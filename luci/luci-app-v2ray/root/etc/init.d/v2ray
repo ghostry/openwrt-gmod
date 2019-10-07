@@ -11,9 +11,16 @@ NAME=v2ray
 CONFIG_FOLDER=/var/etc/$NAME
 
 TRANSPARENT_PROXY_ENABLED=
+TRANSPARENT_PROXY_ROUTER=
 TRANSPARENT_PROXY_ADDITION=
 TRANSPARENT_PROXY_PORT=
 TRANSPARENT_PROXY_SERVER_IPS=
+
+INBOUND_SETTINGS_JSON="/etc/v2ray/inbound-settings.json"
+INBOUND_STREAM_SETTINGS_JSON="/etc/v2ray/inbound-stream-settings.json"
+OUTBOUND_SETTINGS_JSON="/etc/v2ray/outbound-settings.json"
+OUTBOUND_STREAM_SETTINGS_JSON="/etc/v2ray/outbound-stream-settings.json"
+TRANSPORT_JSON="/etc/v2ray/transport.json"
 
 if [ -r /usr/share/libubox/jshn.sh ] ; then
 	. /usr/share/libubox/jshn.sh
@@ -54,6 +61,8 @@ get_value_from_file() {
 	local file="$1"
 	local key="$2"
 
+	test -f "$file" || return
+
 	cat >&1 <<-EOF | lua - 2>/dev/null
 	local v2ray = require "luci.model.v2ray"
 	local json = v2ray.get_value_from_file("$file", "$key")
@@ -63,7 +72,9 @@ get_value_from_file() {
 
 get_value_from_json() {
 	local json="$1"
-	local key="$1"
+	local key="$2"
+
+	test -n "$json" || return
 
 	local value=""
 
@@ -75,6 +86,23 @@ get_value_from_json() {
 	json_set_namespace "$old_ns"
 
 	echo "$value"
+}
+
+get_commands_from_json() {
+	local json="$1"
+
+	test -n "$json" || return
+
+	jshn -r "$json" 2>/dev/null | grep -v "json_init"
+}
+
+append_address() {
+	local address="$1"
+	if [ -z "$TRANSPARENT_PROXY_SERVER_IPS" ] ; then
+		TRANSPARENT_PROXY_SERVER_IPS="$address"
+	else
+		TRANSPARENT_PROXY_SERVER_IPS="$TRANSPARENT_PROXY_SERVER_IPS $address"
+	fi
 }
 
 v2ray_section_validate() {
@@ -173,6 +201,7 @@ inbound_section_validate() {
 		'transparent_proxy_enabled:bool:0' \
 		'transparent_proxy_udp:bool:0' \
 		'transparent_proxy_dns:bool:0' \
+		'transparent_proxy_router:bool:0' \
 		'tag:string' \
 		'sniffing_enabled:bool:0' \
 		'sniffing_dest_override:list(or("http", "tls"))' \
@@ -194,24 +223,40 @@ outbound_section_validate() {
 add_v2ray_rules() {
 	local port="$1"
 	local server_ips="$2"
-	local addition_proxy="$3"
+	local proxy_router="$3"
+	local addition_proxy="$4"
+
+	# https://en.wikipedia.org/wiki/Reserved_IP_addresses
+	local reserved_ips="$(cat >&1 <<-EOF
+		0.0.0.0/8
+		10.0.0.0/8
+		100.64.0.0/10
+		127.0.0.0/8
+		169.254.0.0/16
+		172.16.0.0/12
+		192.0.0.0/24
+		192.0.2.0/24
+		192.88.99.0/24
+		192.168.0.0/16
+		198.18.0.0/15
+		198.51.100.0/24
+		203.0.113.0/24
+		224.0.0.0/4
+		240.0.0.0/4
+		255.255.255.255/32
+	EOF
+	)"
 
 	# ToutyRater/v2ray-guide#24
 	iptables-restore --noflush <<-EOF 2>/dev/null
 		*nat
 		:V2RAY -
 		$(for s in $server_ips ; do echo "-A V2RAY -d $s -j RETURN" ; done)
-		-A V2RAY -d 0.0.0.0/8 -j RETURN
-		-A V2RAY -d 10.0.0.0/8 -j RETURN
-		-A V2RAY -d 127.0.0.0/8 -j RETURN
-		-A V2RAY -d 169.254.0.0/16 -j RETURN
-		-A V2RAY -d 172.16.0.0/12 -j RETURN
-		-A V2RAY -d 192.168.0.0/16 -j RETURN
-		-A V2RAY -d 224.0.0.0/4 -j RETURN
-		-A V2RAY -d 240.0.0.0/4 -j RETURN
+		$(for r in $reserved_ips ; do echo "-A V2RAY -d $r -j RETURN" ; done)
+		$(test -n "$proxy_router" && echo "-A V2RAY -p tcp -j RETURN -m mark --mark 0xff")
 		-A V2RAY -p tcp -j REDIRECT --to-ports $port
 		-A PREROUTING -p tcp -j V2RAY
-		#-A OUTPUT -p tcp -j V2RAY
+		$(test -n "$proxy_router" && echo "-A OUTPUT -p tcp -j V2RAY")
 		COMMIT
 	EOF
 
@@ -223,18 +268,13 @@ add_v2ray_rules() {
 		if [ "$addition_proxy" = "dns" ] ; then
 			d_port="--dport 53"
 		fi
+
 		iptables-restore --noflush <<-EOF 2>/dev/null
 			*mangle
 			:V2RAY -
 			#:V2RAY_MARK -
-			-A V2RAY -d 0.0.0.0/8 -j RETURN
-			-A V2RAY -d 10.0.0.0/8 -j RETURN
-			-A V2RAY -d 127.0.0.0/8 -j RETURN
-			-A V2RAY -d 169.254.0.0/16 -j RETURN
-			-A V2RAY -d 172.16.0.0/12 -j RETURN
-			-A V2RAY -d 192.168.0.0/16 -j RETURN
-			-A V2RAY -d 224.0.0.0/4 -j RETURN
-			-A V2RAY -d 240.0.0.0/4 -j RETURN
+			$(for s in $server_ips ; do echo "-A V2RAY -d $s -j RETURN" ; done)
+			$(for r in $reserved_ips ; do echo "-A V2RAY -d $r -j RETURN" ; done)
 			-A V2RAY -p udp $d_port -j TPROXY --on-port $port --tproxy-mark 0x01/0x01
 			#-A V2RAY_MARK -p udp $d_port -j MARK --set-mark 1
 			-A PREROUTING -p udp -j V2RAY
@@ -305,6 +345,8 @@ add_dns_settings() {
 
 					if [ -n "$port" ] ; then
 						json_add_int "port" "$port"
+					else
+						json_add_int "port" "53"
 					fi
 
 					if [ -n "$domains" ] ; then
@@ -529,7 +571,7 @@ add_reverse_settings() {
 		json_close_array
 	fi
 
-	if [ -n "portals" ] ; then
+	if [ -n "$portals" ] ; then
 		json_add_array "portals"
 		local p
 		for p in $portals ; do
@@ -551,22 +593,20 @@ add_reverse_settings() {
 add_transport_settings() {
 	local section="$1"
 
-	local transport_json="/etc/v2ray/transport.json"
-
-	if [ ! -f "$transport_json" ] ; then
+	if [ ! -f "$TRANSPORT_JSON" ] ; then
 		_err "Transport config file not found: $transport_json"
 		return 1
 	fi
 
 	local json
-	json="$(get_value_from_file "$transport_json" "$section")"
+	json="$(get_value_from_file "$TRANSPORT_JSON" "$section")"
 	if [ -z "$json" ] ; then
 		_err "Invalid transport config: $section"
 		return 1
 	fi
 
 	json_add_object "transport"
-	eval "$(jshn -r "$json" 2>/dev/null | grep -v "json_init")"
+	eval "$(get_commands_from_json "$json")"
 	json_close_object
 }
 
@@ -626,35 +666,35 @@ add_inbound_setting() {
 			TRANSPARENT_PROXY_ADDITION=""
 		fi
 
+		if [ "x$transparent_proxy_router" = "x1" ] ; then
+			TRANSPARENT_PROXY_ROUTER="1"
+		else
+			TRANSPARENT_PROXY_ROUTER=""
+		fi
+
 		json_add_object "settings"
 		json_add_string "network" "$network_types"
 		json_add_int "timeout" "30"
 		json_add_boolean "followRedirect" "1"
 		json_close_object
 	else
-		local inbound_settings_json="/etc/v2ray/inbound-settings.json"
-		if [ -f "$inbound_settings_json" ] ; then
-			local json
-			json="$(get_value_from_file "$inbound_settings_json" "$section")"
+		local json
+		json="$(get_value_from_file "$INBOUND_SETTINGS_JSON" "$section")"
 
-			if [ -n "$json" ] ; then
-				json_add_object "settings"
-				eval "$(jshn -r "$json" 2>/dev/null | grep -v "json_init")"
-				json_close_object
-			fi
+		if [ -n "$json" ] ; then
+			json_add_object "settings"
+			eval "$(get_commands_from_json "$json")"
+			json_close_object
 		fi
 	fi
 
-	local inbound_stream_settings_json="/etc/v2ray/inbound-stream-settings.json"
-	if [ -f "$inbound_stream_settings_json" ] ; then
-		local json
-		json="$(get_value_from_file "$inbound_stream_settings_json" "$section")"
+	local json
+	json="$(get_value_from_file "$INBOUND_STREAM_SETTINGS_JSON" "$section")"
 
-		if [ -n "$json" ] ; then
-			json_add_object "streamSettings"
-			eval "$(jshn -r "$json" 2>/dev/null | grep -v "json_init")"
-			json_close_object
-		fi
+	if [ -n "$json" ] ; then
+		json_add_object "streamSettings"
+		eval "$(get_commands_from_json "$json")"
+		json_close_object
 	fi
 
 	json_close_object
@@ -686,49 +726,56 @@ add_outbound_setting() {
 	json_add_int "concurrency" "$mux_concurrency"
 	json_close_object
 
-	local outbound_settings_json="/etc/v2ray/outbound-settings.json"
-	if [ -f "$outbound_settings_json" ] ; then
-		local json
-		json="$(get_value_from_file "$outbound_settings_json" "$section")"
+	local json
+	json="$(get_value_from_file "$OUTBOUND_SETTINGS_JSON" "$section")"
 
-		if [ -n "$json" ] ; then
-			local commands
-			commands="$(jshn -r "$json" 2>/dev/null | grep -v "json_init")"
+	if [ -n "$json" ] ; then
+		local commands
+		commands="$(get_commands_from_json "$json")"
 
-			json_add_object "settings"
-			eval "$commands"
-			json_close_object
+		json_add_object "settings"
+		eval "$commands"
+		json_close_object
 
-			if [ -n "$TRANSPARENT_PROXY_ENABLED" ] ; then
-				local address_commands="$(echo "$commands" | grep "'address'" | cut -d';' -f1 | cut -d' ' -f3)"
-				if [ -n "$address_commands" ] ; then
-					local a
-					for a in $address_commands ; do
-						# remove single quotes
-						eval "local address=$a"
-						# check if is a IPv4 address
-						if [ -n "$(echo "$address" | cut -d'.' -f4)" ] ; then
-							if [ -z "$TRANSPARENT_PROXY_SERVER_IPS" ] ; then
-								TRANSPARENT_PROXY_SERVER_IPS="$address"
-							else
-								TRANSPARENT_PROXY_SERVER_IPS="$TRANSPARENT_PROXY_SERVER_IPS $address"
-							fi
-						fi
-					done
-				fi
+		if [ -n "$TRANSPARENT_PROXY_ENABLED" ] ; then
+			local address_commands
+			address_commands="$(echo "$commands" | grep "'address'" | cut -d';' -f1 | cut -d' ' -f3)"
+
+			if [ -n "$address_commands" ] ; then
+				local a
+				for a in $address_commands ; do
+					# remove single quotes
+					eval "local address=$a"
+
+					# check if is a IPv4 address
+					test -n "$(echo "$address" | cut -d'.' -f4)" && \
+						append_address "$address"
+				done
 			fi
-
 		fi
+
 	fi
 
-	local outbound_stream_settings_json="/etc/v2ray/outbound-stream-settings.json"
-	if [ -f "$outbound_stream_settings_json" ] ; then
-		local json
-		json="$(get_value_from_file "$outbound_stream_settings_json" "$section")"
+	add_so_mark() {
+		json_add_object "sockopt"
+		json_add_int "mark" 255
+		json_close_object
+	}
 
-		if [ -n "$json" ] ; then
+	local json
+	json="$(get_value_from_file "$OUTBOUND_STREAM_SETTINGS_JSON" "$section")"
+
+	if [ -n "$json" ] ; then
+		json_add_object "streamSettings"
+		eval "$(get_commands_from_json "$json")"
+
+		test -n "$TRANSPARENT_PROXY_ROUTER" && add_so_mark
+
+		json_close_object
+	else
+		if [ -n "$TRANSPARENT_PROXY_ROUTER" ] ; then
 			json_add_object "streamSettings"
-			eval "$(jshn -r "$json" 2>/dev/null | grep -v "json_init")"
+			add_so_mark
 			json_close_object
 		fi
 	fi
@@ -751,10 +798,6 @@ start_instance() {
 	if [ -z "$v2ray_file" ] || ! ( v2ray_file_validate "$v2ray_file" ) ; then
 		_err "Invalid V2Ray file."
 		return 1
-	fi
-
-	if [ -z "$asset_location" ] && [ -d "$asset_location" ] ; then
-		export V2RAY_LOCATION_ASSET="$asset_location"
 	fi
 
 	local temp_config
@@ -834,9 +877,17 @@ start_instance() {
 	procd_set_param command "$v2ray_file"
 	procd_append_param command "--config=$temp_config"
 	procd_set_param respawn
+
+	if [ -n "$asset_location" ] && [ -d "$asset_location" ] ; then
+		procd_set_param env V2RAY_LOCATION_ASSET="$asset_location"
+	fi
+
+	procd_set_param limits nofile="102400 102400"
+	procd_append_param limits core="unlimited"
 	procd_set_param file "$temp_config"
 	procd_set_param stderr 1 # forward stderr of the command to logd
 	procd_set_param stdout 1
+	procd_set_param pidfile "/var/run/${NAME}.${section}.pid"
 	procd_close_instance
 }
 
@@ -853,6 +904,7 @@ start_service() {
 	if [ -n "$TRANSPARENT_PROXY_ENABLED" ] ; then
 		add_v2ray_rules "$TRANSPARENT_PROXY_PORT" \
 			"$TRANSPARENT_PROXY_SERVER_IPS" \
+			"$TRANSPARENT_PROXY_ROUTER" \
 			"$TRANSPARENT_PROXY_ADDITION"
 	fi
 

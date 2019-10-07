@@ -4,6 +4,7 @@
 local dsp = require "luci.dispatcher"
 local nixio = require "nixio"
 local util = require "luci.util"
+local sys = require "luci.sys"
 local v2ray = require "luci.model.v2ray"
 
 local m, s, o
@@ -12,6 +13,9 @@ local sid = arg[1]
 
 m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("Edit Inbound") })
 m.redirect = dsp.build_url("admin/services/v2ray/inbounds")
+m.on_after_save = function ()
+	sys.call("/etc/init.d/v2ray reload 2>/dev/null")
+end
 
 if m.uci:get("v2ray", sid) ~= "inbound" then
 	luci.http.redirect(m.redirect)
@@ -63,6 +67,10 @@ o:depends("transparent_proxy_enabled", "1")
 o = s:option(Flag, "transparent_proxy_dns", "%s - %s" %{ translate("Transparent proxy"), translate("DNS traffic") })
 o:depends({ transparent_proxy_enabled = "1", transparent_proxy_udp = "" })
 o:depends({ transparent_proxy_enabled = "1", transparent_proxy_udp = "0" })
+
+o = s:option(Flag, "transparent_proxy_router", "%s - %s" %{ translate("Transparent proxy"), translate("Router traffic") },
+	translate("Proxy router's own traffic."))
+o:depends("transparent_proxy_enabled", "1")
 
 o = s:option(TextValue, "_settings", translate("Settings"), translate("Protocol-specific settings, JSON string"))
 o:depends("transparent_proxy_enabled", "")
