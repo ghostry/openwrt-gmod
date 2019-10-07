@@ -41,12 +41,6 @@ ifeq ($(ARCH),i386)
 endif
 ifeq ($(ARCH),arm)
 	PKG_ARCH_SMARTDNS:=arm
-	ifneq ($(BOARD),bcm53xx)
-		SMARTDNS_BIN:=smartdns_armv7
-	endif
-	ifeq ($(BOARD),kirkwood)
-		SMARTDNS_BIN:=smartdns
-	endif
 endif
 ifeq ($(ARCH),aarch64)
 	PKG_ARCH_SMARTDNS:=arm64
