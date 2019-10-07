@@ -71,8 +71,8 @@ endef
 
 define project-v/SubMenu
   SECTION:=net
-  CATEGORY:=Network
-  SUBMENU:=Project V
+  CATEGORY:=Gmod
+  SUBMENU:=Network
 endef
 
 define Package/v2ray-core
