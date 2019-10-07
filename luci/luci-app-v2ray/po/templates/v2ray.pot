@@ -529,6 +529,12 @@ msgstr ""
 msgid "Transparent proxy"
 msgstr ""
 
+msgid "Transparent proxy ipset"
+msgstr ""
+
+msgid "IPset name"
+msgstr ""
+
 #: luasrc/model/cbi/v2ray/main.lua:121 luasrc/model/cbi/v2ray/main.lua:124
 msgid "Transport"
 msgstr ""

@@ -199,6 +199,7 @@ inbound_section_validate() {
 		'listen:ipaddr:0.0.0.0' \
 		'protocol:string' \
 		'transparent_proxy_enabled:bool:0' \
+		'transparent_proxy_ipset:string' \
 		'transparent_proxy_udp:bool:0' \
 		'transparent_proxy_dns:bool:0' \
 		'transparent_proxy_router:bool:0' \
@@ -224,7 +225,8 @@ add_v2ray_rules() {
 	local port="$1"
 	local server_ips="$2"
 	local proxy_router="$3"
-	local addition_proxy="$4"
+	local proxy_ipset="$4"
+	local addition_proxy="$5"
 
 	# https://en.wikipedia.org/wiki/Reserved_IP_addresses
 	local reserved_ips="$(cat >&1 <<-EOF
@@ -247,6 +249,12 @@ add_v2ray_rules() {
 	EOF
 	)"
 
+	if [ "$proxy_ipset" == "" ];then
+		output="-A OUTPUT -p tcp -j V2RAY"
+	else
+		output="-A OUTPUT -p tcp -m set --match-set $proxy_ipset dst -j V2RAY"
+	fi
+
 	# ToutyRater/v2ray-guide#24
 	iptables-restore --noflush <<-EOF 2>/dev/null
 		*nat
@@ -256,7 +264,7 @@ add_v2ray_rules() {
 		$(test -n "$proxy_router" && echo "-A V2RAY -p tcp -j RETURN -m mark --mark 0xff")
 		-A V2RAY -p tcp -j REDIRECT --to-ports $port
 		-A PREROUTING -p tcp -j V2RAY
-		$(test -n "$proxy_router" && echo "-A OUTPUT -p tcp -j V2RAY")
+		$(test -n "$proxy_router" && echo $output)
 		COMMIT
 	EOF
 
@@ -905,6 +913,7 @@ start_service() {
 		add_v2ray_rules "$TRANSPARENT_PROXY_PORT" \
 			"$TRANSPARENT_PROXY_SERVER_IPS" \
 			"$TRANSPARENT_PROXY_ROUTER" \
+			"$TRANSPARENT_PROXY_IPSET" \
 			"$TRANSPARENT_PROXY_ADDITION"
 	fi
 

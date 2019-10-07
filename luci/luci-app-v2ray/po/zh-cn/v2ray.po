@@ -529,6 +529,12 @@ msgstr "透明代理"
 msgid "Transparent proxy"
 msgstr "透明代理"
 
+msgid "Transparent proxy ipset"
+msgstr "IPset透明代理"
+
+msgid "IPset name"
+msgstr "IPset名字"
+
 #: luasrc/model/cbi/v2ray/main.lua:121 luasrc/model/cbi/v2ray/main.lua:124
 msgid "Transport"
 msgstr "底层传输"
