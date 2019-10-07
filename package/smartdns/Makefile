@@ -7,8 +7,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=smartdns
-PKG_VERSION:=1.2019.05.21
-PKG_RELEASE:=2250
+PKG_VERSION:=1.2019.06.21
+PKG_RELEASE:=2337
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -17,7 +17,6 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Gmod
 	SUBMENU:=Network
 	TITLE:=Smartdns is a DNS proxy software
- 	DEPENDS:=+libopenssl
 	URL:=https://github.com/pymumu/smartdns/releases
 endef
 
