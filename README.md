@@ -4,9 +4,11 @@
 -------
 ```
 luci-app-smartdns
+luci-app-v2ray
 luci-proto-n2n
 n2n
 smartdns
+v2ray
 ```
 ==============
 
@@ -28,9 +30,3 @@ smartdns
     github.com,自己编写
 
 ==============
-
-说明
--------
-如果你要找旧文件,可以查看https://github.com/ghostry/openwrt-gmod/releases/tag/20170723
-
-luci-app-shadowsocks的使用方法可以查看https://github.com/shadowsocks/luci-app-shadowsocks/wiki/Use-UCI-system
