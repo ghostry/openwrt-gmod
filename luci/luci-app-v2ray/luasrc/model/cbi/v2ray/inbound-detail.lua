@@ -61,7 +61,7 @@ o:value("vmess")
 o = s:option(Flag, "transparent_proxy_enabled", "%s - %s" % { translate("Transparent proxy"), translate("Enabled") })
 o:depends("protocol", "dokodemo-door")
 
-o = s:option(TextValue, "transparent_proxy_ipset", "%s - %s" %{ translate("Transparent proxy ipset"), translate("IPset name") })
+o = s:option(Value, "transparent_proxy_ipset", "%s - %s" %{ translate("Transparent proxy ipset"), translate("IPset name") })
 o:depends("transparent_proxy_enabled", "1")
 
 o = s:option(Flag, "transparent_proxy_udp", "%s - %s" %{ translate("Transparent proxy"), translate("UDP traffic") })
