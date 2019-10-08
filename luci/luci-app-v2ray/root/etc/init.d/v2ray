@@ -12,6 +12,7 @@ CONFIG_FOLDER=/var/etc/$NAME
 
 TRANSPARENT_PROXY_ENABLED=
 TRANSPARENT_PROXY_ROUTER=
+TRANSPARENT_PROXY_IPSET=
 TRANSPARENT_PROXY_ADDITION=
 TRANSPARENT_PROXY_PORT=
 TRANSPARENT_PROXY_SERVER_IPS=
@@ -251,8 +252,10 @@ add_v2ray_rules() {
 
 	if [ "$proxy_ipset" == "" ];then
 		output="-A OUTPUT -p tcp -j V2RAY"
+		prerouting="-A PREROUTING -p tcp -j V2RAY"
 	else
 		output="-A OUTPUT -p tcp -m set --match-set $proxy_ipset dst -j V2RAY"
+		prerouting="-A PREROUTING -p tcp -m set --match-set $proxy_ipset dst -j V2RAY"
 		ipset create $proxy_ipset hash:ip
 	fi
 
@@ -264,8 +267,8 @@ add_v2ray_rules() {
 		$(for r in $reserved_ips ; do echo "-A V2RAY -d $r -j RETURN" ; done)
 		$(test -n "$proxy_router" && echo "-A V2RAY -p tcp -j RETURN -m mark --mark 0xff")
 		-A V2RAY -p tcp -j REDIRECT --to-ports $port
-		-A PREROUTING -p tcp -j V2RAY
-		$(test -n "$proxy_router" && echo $output)
+		$prerouting
+		$(test -n "$proxy_router" && echo "$output")
 		COMMIT
 	EOF
 
@@ -674,7 +677,7 @@ add_inbound_setting() {
 		else
 			TRANSPARENT_PROXY_ADDITION=""
 		fi
-
+		TRANSPARENT_PROXY_IPSET="$transparent_proxy_ipset"
 		if [ "x$transparent_proxy_router" = "x1" ] ; then
 			TRANSPARENT_PROXY_ROUTER="1"
 		else
