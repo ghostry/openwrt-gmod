@@ -1,76 +1,60 @@
 #
-# Copyright (C) 2015-2016 OpenWrt.org
-#
+# Copyright (c) 2018-2019 Nick Peng (pymumu@gmail.com)
 # This is free software, licensed under the GNU General Public License v3.
 #
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=smartdns
-PKG_VERSION:=1.2019.05.21
-PKG_RELEASE:=2250
+PKG_VERSION:=1.2019.28
+PKG_RELEASE:=1
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://www.github.com/pymumu/smartdns.git
+PKG_SOURCE_VERSION:=982002e836e486fb4e360bc10e84e7e7197caf46
+PKG_MIRROR_HASH:=ae889b521ecf114660ce5597af5c361f5970a7dcb75dadf61b938ba3d2baba54
+
+PKG_MAINTAINER:=Nick Peng <pymumu@gmail.com>
+PKG_LICENSE:=GPL-3.0-or-later
+PKG_LICENSE_FILES:=LICENSE
+
+PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
-	SECTION:=net
-	CATEGORY:=Gmod
-	SUBMENU:=Network
-	TITLE:=Smartdns is a DNS proxy software
- 	DEPENDS:=+libopenssl
-	URL:=https://github.com/pymumu/smartdns/releases
+MAKE_VARS += VER=$(PKG_VERSION)
+MAKE_PATH:=src
+
+define Package/smartdns
+  SECTION:=net
+  CATEGORY:=Gmod
+  SUBMENU:=Network
+  TITLE:=smartdns server
+  DEPENDS:=+libpthread +libopenssl
+  URL:=https://www.github.com/pymumu/smartdns/
 endef
 
-
-define Package/$(PKG_NAME)/description
-smartdns is a DNS proxy software
+define Package/smartdns/description
+SmartDNS is a local DNS server which accepts DNS query requests from local network clients,
+get DNS query results from multiple upstream DNS servers concurrently, and returns the fastest IP to clients.
+Unlike dnsmasq's all-servers, smartdns returns the fastest IP.
 endef
 
-SMARTDNS_BIN:=smartdns
-
-ifeq ($(ARCH),x86_64)
-	PKG_ARCH_SMARTDNS:=amd64
-endif
-ifeq ($(ARCH),mipsel)
-	PKG_ARCH_SMARTDNS:=mipsle
-endif
-ifeq ($(ARCH),mips)
-	PKG_ARCH_SMARTDNS:=mips
-endif
-ifeq ($(ARCH),i386)
-	PKG_ARCH_SMARTDNS:=x86
-endif
-ifeq ($(ARCH),arm)
-	PKG_ARCH_SMARTDNS:=arm
-	ifneq ($(BOARD),bcm53xx)
-		SMARTDNS_BIN:=smartdns_armv7
-	endif
-	ifeq ($(BOARD),kirkwood)
-		SMARTDNS_BIN:=smartdns
-	endif
-endif
-ifeq ($(ARCH),aarch64)
-	PKG_ARCH_SMARTDNS:=arm64
-endif
-
-define Build/Prepare
+define Package/smartdns/conffiles
+/etc/config/smartdns
+/etc/smartdns/address.conf
+/etc/smartdns/blacklist-ip.conf
+/etc/smartdns/custom.conf
 endef
 
-define Build/Configure
+define Package/smartdns/install
+	$(INSTALL_DIR) $(1)/usr/sbin $(1)/etc/config $(1)/etc/init.d $(1)/etc/smartdns
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/smartdns $(1)/usr/sbin/smartdns
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/package/openwrt/files/etc/init.d/smartdns $(1)/etc/init.d/smartdns
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/package/openwrt/address.conf $(1)/etc/smartdns/address.conf
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/package/openwrt/blacklist-ip.conf $(1)/etc/smartdns/blacklist-ip.conf
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/package/openwrt/custom.conf $(1)/etc/smartdns/custom.conf
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/package/openwrt/files/etc/config/smartdns $(1)/etc/config/smartdns
 endef
 
-define Build/Compile
-endef
-
-define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) ./files/$(PKG_ARCH_SMARTDNS)/$(SMARTDNS_BIN) $(1)/usr/sbin/smartdns
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_DATA) ./files/etc/config/smartdns $(1)/etc/config
-	$(INSTALL_DIR) $(1)/etc/smartdns
-	$(INSTALL_DATA) ./files/etc/smartdns/*.conf $(1)/etc/smartdns
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/etc/init.d/smartdns $(1)/etc/init.d/smartdns
-endef
-
-$(eval $(call BuildPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,smartdns))
