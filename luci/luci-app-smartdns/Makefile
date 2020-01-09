@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015 Gmod
+# Copyright (C) 2020 Gmod
 #
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
@@ -8,8 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-smartdns
-PKG_VERSION:=1.2019.06.21
-PKG_RELEASE:=2337
+PKG_VERSION:=1.2019.28
+PKG_RELEASE:=1
 
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
@@ -28,27 +28,8 @@ define Package/luci-app-smartdns
 	DEPENDS:=+smartdns
 endef
 
-
 define Package/luci-app-smartdns/description
-	LuCI Support for cdns.
-endef
-
-define Build/Prepare
-endef
-
-define Build/Configure
-endef
-
-define Build/Compile
-endef
-
-define Package/luci-app-smartdns/postinst
-#!/bin/sh
-if [ -z "$${IPKG_INSTROOT}" ]; then
-	chmod 755 /etc/init.d/cdns >/dev/null 2>&1
-	/etc/init.d/cdns enable >/dev/null 2>&1
-fi
-exit 0
+	LuCI Support for smartdns.
 endef
 
 define Package/luci-app-smartdns/install
