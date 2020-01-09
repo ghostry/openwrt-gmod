@@ -32,6 +32,24 @@ define Package/luci-app-smartdns/description
 	LuCI Support for smartdns.
 endef
 
+define Build/Prepare
+endef
+
+define Build/Configure
+endef
+
+define Build/Compile
+endef
+
+define Package/luci-app-smartdns/postinst
+#!/bin/sh
+if [ -z "$${IPKG_INSTROOT}" ]; then
+	chmod 755 /etc/init.d/smartdns >/dev/null 2>&1
+	/etc/init.d/smartdns enable >/dev/null 2>&1
+fi
+exit 0
+endef
+
 define Package/luci-app-smartdns/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
 	$(INSTALL_DATA) ./files/luci/controller/smartdns.lua $(1)/usr/lib/lua/luci/controller/smartdns.lua
