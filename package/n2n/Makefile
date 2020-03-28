@@ -2,14 +2,15 @@ include $(TOPDIR)/rules.mk
 
 
 PKG_NAME:=n2n
-PKG_VERSION:=2.4
+PKG_VERSION:=2.6
 PKG_RELEASE:=$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/ntop/n2n/archive/
-PKG_MD5SUM:=807c465be11615d2e08a8bd85244b95c
+PKG_MD5SUM:=29c5f1b9fcb2835128d5be9f9d2898d5
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
 
 PKG_SOURCE:=$(PKG_VERSION).tar.gz
+PKG_FIXUP:=autoreconf
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -40,11 +41,9 @@ define Package/n2n-supernode/description
 N2Nv2 server (supernode).
 endef
 
-define Build/Compile
-		$(MAKE) -C $(PKG_BUILD_DIR) \
-		$(TARGET_CONFIGURE_OPTS) \
-		CFLAGS="$(TARGET_CFLAGS)" \
-		INSTALL_PROG=":"
+define Build/Configure
+	( cd $(PKG_BUILD_DIR); ./autogen.sh )
+	$(call Build/Configure/Default)
 endef
 
 define Package/n2n-edge/install
@@ -57,12 +56,12 @@ define Package/n2n-supernode/conffiles
 endef
 
 define Package/n2n-supernode/install
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/supernode $(1)/usr/sbin/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/supernode $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/n2n.init $(1)/etc/init.d/n2n
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/packages/openwrt/etc/init.d/supernode $(1)/etc/init.d/supernode
 	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_DATA) ./files/n2n.config $(1)/etc/config/n2n
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/packages/etc/n2n/supernode.conf.sample $(1)/etc/config/n2n-supernode.conf
 endef
 
 $(eval $(call BuildPackage,n2n-edge))
