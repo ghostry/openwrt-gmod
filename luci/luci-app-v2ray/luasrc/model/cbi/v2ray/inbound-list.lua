@@ -1,4 +1,4 @@
--- Copyright 2019 Xingwang Liao <kuoruan@gmail.com>
+-- Copyright 2019-2020 Xingwang Liao <kuoruan@gmail.com>
 -- Licensed to the public under the MIT License.
 
 local dsp = require "luci.dispatcher"
@@ -42,15 +42,14 @@ o.cfgvalue = function (...)
 	return Value.cfgvalue(...) or "?"
 end
 
-o = s:option(DummyValue, "tag", translate("Tag"))
+o = s:option(DummyValue, "ss_network", translate("Stream Network"))
 o.cfgvalue = function (...)
 	return Value.cfgvalue(...) or "?"
 end
 
-o = s:option(DummyValue, "transparent_proxy_enabled", translate("Transparent Proxy"))
+o = s:option(DummyValue, "tag", translate("Tag"))
 o.cfgvalue = function (...)
-	local v = Value.cfgvalue(...)
-	return v == "1" and translate("Yes") or translate("No")
+	return Value.cfgvalue(...) or "?"
 end
 
 return m

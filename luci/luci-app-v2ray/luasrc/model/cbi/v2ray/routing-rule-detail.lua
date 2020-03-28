@@ -1,4 +1,4 @@
--- Copyright 2019 Xingwang Liao <kuoruan@gmail.com>
+-- Copyright 2019-2020 Xingwang Liao <kuoruan@gmail.com>
 -- Licensed to the public under the MIT License.
 
 local dsp = require "luci.dispatcher"
@@ -7,7 +7,8 @@ local m, s, o
 
 local sid = arg[1]
 
-m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("Edit Routing Rule") })
+m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("Edit Routing Rule") },
+	translatef("Details: %s", "<a href=\"https://www.v2ray.com/en/configuration/routing.html#ruleobject\" target=\"_blank\">RuleObject</a>"))
 m.redirect = dsp.build_url("admin/services/v2ray/routing")
 
 if m.uci:get("v2ray", sid) ~= "routing_rule" then
@@ -30,7 +31,7 @@ o = s:option(DynamicList, "domain", translate("Domain"))
 o = s:option(DynamicList, "ip", translate("IP"))
 
 o = s:option(DynamicList, "port", translate("Port"))
-o.datatype = 'or(port, portrange)'
+o.datatype = "or(port, portrange)"
 
 o = s:option(MultiValue, "network", translate("Network"))
 o:value("tcp")

@@ -1,4 +1,4 @@
--- Copyright 2019 Xingwang Liao <kuoruan@gmail.com>
+-- Copyright 2019-2020 Xingwang Liao <kuoruan@gmail.com>
 -- Licensed to the public under the MIT License.
 
 local dsp = require "luci.dispatcher"
@@ -6,6 +6,7 @@ local dsp = require "luci.dispatcher"
 local m, s, o
 
 m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("Outbound") })
+m:append(Template("v2ray/import_outbound"))
 
 s = m:section(TypedSection, "outbound")
 s.anonymous = true
@@ -37,9 +38,15 @@ o.cfgvalue = function (...)
 	return Value.cfgvalue(...) or "?"
 end
 
+o = s:option(DummyValue, "ss_network", translate("Stream Network"))
+o.cfgvalue = function (...)
+	return Value.cfgvalue(...) or "?"
+end
+
 o = s:option(DummyValue, "tag", translate("Tag"))
 o.cfgvalue = function (...)
 	return Value.cfgvalue(...) or "?"
 end
+
 
 return m

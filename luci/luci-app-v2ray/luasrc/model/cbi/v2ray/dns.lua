@@ -1,4 +1,4 @@
--- Copyright 2019 Xingwang Liao <kuoruan@gmail.com>
+-- Copyright 2019-2020 Xingwang Liao <kuoruan@gmail.com>
 -- Licensed to the public under the MIT License.
 
 local uci = require "luci.model.uci".cursor()
@@ -16,7 +16,8 @@ uci:foreach("v2ray", "dns_server", function(s)
 	end
 end)
 
-m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("DNS") })
+m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("DNS") },
+	translatef("Details: %s", "<a href=\"https://www.v2ray.com/en/configuration/dns.html#dnsobject\" target=\"_blank\">DnsObject</a>"))
 
 s1 = m:section(NamedSection, "main_dns", "dns")
 s1.anonymous = true
@@ -28,7 +29,7 @@ o.rmempty = false
 o = s1:option(Value, "tag", translate("Tag"))
 
 o = s1:option(Value, "client_ip", translate("Client IP"),
-	"<a href=\"https://www.icanhazip.com\" target=\"_blank\">%s</a>" % translate("Get my public IP address"))
+	"<a href=\"https://icanhazip.com\" target=\"_blank\">%s</a>" % translate("Get my public IP address"))
 o.datatype = "ipaddr"
 
 o = s1:option(DynamicList, "hosts", translate("Hosts"),
@@ -47,11 +48,10 @@ o = s2:option(Value, "alias", translate("Alias"), translate("Any custom string")
 o.rmempty = false
 
 o = s2:option(Value, "address", translate("Address"))
-o.datatype = "ipaddr"
 
 o = s2:option(Value, "port", translate("Port"))
 o.datatype = "port"
-o.placeholder = '53'
+o.placeholder = "53"
 
 o = s2:option(DynamicList, "domains", translate("Domains"))
 

@@ -1,4 +1,4 @@
--- Copyright 2019 Xingwang Liao <kuoruan@gmail.com>
+-- Copyright 2019-2020 Xingwang Liao <kuoruan@gmail.com>
 -- Licensed to the public under the MIT License.
 
 local dsp = require "luci.dispatcher"
@@ -25,7 +25,8 @@ uci:foreach("v2ray", "routing_balancer", function(s)
 	end
 end)
 
-m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("Routing") })
+m = Map("v2ray", "%s - %s" % { translate("V2Ray"), translate("Routing") },
+	translatef("Details: %s", "<a href=\"https://www.v2ray.com/en/configuration/routing.html#routingobject\" target=\"_blank\">RoutingObject</a>"))
 
 s1 = m:section(NamedSection, "main_routing", "routing")
 s1.anonymous = true
@@ -34,6 +35,7 @@ s1.addremove = false
 o = s1:option(Flag, "enabled", translate("Enabled"))
 
 o = s1:option(ListValue, "domain_strategy", translate("Domain resolution strategy"))
+o:value("")
 o:value("AsIs")
 o:value("IPIfNonMatch")
 o:value("IPOnDemand")
