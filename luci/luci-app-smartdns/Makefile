@@ -8,8 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-smartdns
-PKG_VERSION:=1.2020.02.25
-PKG_RELEASE:=2212
+PKG_VERSION:=1.2020.05.04
+PKG_RELEASE:=1
 
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
@@ -43,10 +43,10 @@ define Build/Compile
 endef
 
 define Package/luci-app-smartdns/install
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-	$(INSTALL_DATA) ./files/usr/lib/lua/luci/controller/smartdns.lua $(1)/usr/lib/lua/luci/controller/smartdns.lua
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
-	$(INSTALL_DATA) ./files/usr/lib/lua/luci/i18n/smartdns.*.lmo $(1)/usr/lib/lua/luci/i18n
+	$(INSTALL_DATA) ./files/usr/lib/lua/luci/i18n/smartdns.zh-cn.lmo $(1)/usr/lib/lua/luci/i18n/smartdns.zh-cn.lmo
+	$(INSTALL_DIR) $(1)/usr/share/luci/menu.d
+	$(INSTALL_DATA) ./files/usr/share/luci/menu.d/luci-app-smartdns.json $(1)/usr/share/luci/menu.d/luci-app-smartdns.json
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(INSTALL_DATA) ./files/usr/share/rpcd/acl.d/luci-app-smartdns.json $(1)/usr/share/rpcd/acl.d
 	$(INSTALL_DIR) $(1)/www/luci-static/resources/view/smartdns
