@@ -1,19 +1,20 @@
 #
-# Copyright 2020 Xingwang Liao <kuoruan@gmail.com>
+# Copyright 2019-2020 Xingwang Liao <kuoruan@gmail.com>
 # Licensed to the public under the MIT License.
 #
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-v2ray
-PKG_VERSION:=2.0.0
+PKG_VERSION:=1.5.4
 PKG_RELEASE:=1
 
 PKG_LICENSE:=MIT
 PKG_MAINTAINER:=Xingwang Liao <kuoruan@gmail.com>
 
-LUCI_TITLE:=LuCI support for v2ray
-LUCI_DEPENDS:=+jshn +ip +ipset +iptables +iptables-mod-tproxy +resolveip
+LUCI_TITLE:=LuCI support for V2Ray
+LUCI_DEPENDS:=+jshn +luci-lib-jsonc +ip +ipset +iptables +iptables-mod-tproxy \
+	+resolveip +dnsmasq-full
 LUCI_PKGARCH:=all
 
 define Package/$(PKG_NAME)/conffiles
@@ -30,10 +31,6 @@ define Package/$(PKG_NAME)/postinst
 
 if [ -z "$${IPKG_INSTROOT}" ] ; then
 	( . /etc/uci-defaults/40_luci-v2ray ) && rm -f /etc/uci-defaults/40_luci-v2ray
-
-	rm -rf /tmp/luci-indexcache /tmp/luci-modulecache/
-
-	killall -HUP rpcd 2>/dev/null
 fi
 
 chmod 755 "$${IPKG_INSTROOT}/etc/init.d/v2ray" >/dev/null 2>&1
@@ -51,7 +48,7 @@ if [ -s "$${IPKG_INSTROOT}/etc/rc.d/S99v2ray" ] ; then
 fi
 
 if [ -z "$${IPKG_INSTROOT}" ] ; then
-	rm -rf /tmp/luci-indexcache /tmp/luci-modulecache/
+	rm -rf /tmp/luci-indexcache /tmp/luci-modulecache
 fi
 
 exit 0

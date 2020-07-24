@@ -1,0 +1,47 @@
+<%#
+	Copyright 2019-2020 Xingwang Liao <kuoruan@gmail.com>
+	Licensed to the public under the MIT License.
+-%>
+
+<%
+local dsp = require "luci.dispatcher"
+-%>
+
+<div class="cbi-section">
+	<p id="v2ray_status"><em><%:Collecting data...%></em></p>
+</div>
+
+<script type="text/javascript">//<![CDATA[
+	XHR.poll(5, '<%=dsp.build_url("admin/services/v2ray/status")%>', null,
+		function (x, data)
+		{
+			if (x.status !== 200 || !data)
+			{
+				return;
+			}
+			var v2rayStatusElm = document.getElementById('v2ray_status');
+			v2rayStatusElm.innerHTML = data.running
+				? '<%:Running%>'
+				: '<%:Not Running%>';
+		}
+	);
+
+	(new XHR()).get('<%=dsp.build_url("admin/services/v2ray/version")%>', null,
+		function(x, data)
+		{
+			if (x.status !== 200 || !data)
+			{
+				return;
+			}
+
+			var s, d;
+
+			if ((s = document.getElementById('cbi-v2ray-main-v2ray_file')) && (d = s.getElementsByClassName('cbi-value-description')))
+			{
+				d[0].innerHTML = data.valid
+					? String.format('<%:Version: %s%>', data.version)
+					: String.format('<span style="color: red;">%s</span>', data.message);
+			}
+		}
+	);
+//]]></script>
