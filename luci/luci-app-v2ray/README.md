@@ -56,12 +56,13 @@ Depends:
 
 - jshn
 - luci-lib-jsonc
-- ip
+- ip (ip-tiny or ip-full)
 - ipset
 - iptables
 - iptables-mod-tproxy
 - resolveip
 - dnsmasq-full (dnsmasq ipset is required)
+- luci-compat (for OpenWrt 19.07 and later)
 
 For translations, please install ```luci-i18n-v2ray-*```.
 

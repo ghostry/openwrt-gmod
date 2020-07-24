@@ -6,23 +6,72 @@
 <%
 local dsp = require "luci.dispatcher"
 -%>
+<style type="text/css">
+	._import-modal {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 500px;
+		max-width: 80%;
+		background: #fff;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		padding: 20px;
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		z-index: 10;
+		border-radius: 5px;
+		-webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+	}
+	._import-modal__main textarea {
+		display: block;
+		width: 100%;
+		border: 1px solid #eee;
+	}
+	._import-modal__footer {
+		padding-top: 6px;
+		text-align: right;
+	}
+</style>
 
 <div class="cbi-section">
 	<div class="cbi-section-descr">
-		<input type="button" class="cbi-button" value="<%:Import%>" onclick="return import_outbound(this);" />
+		<input type="button" class="cbi-button" value="<%:Import%>" onclick="return show_import_modal(this);" />
 		<span style="margin-left: 5px;"><%=translatef("Allowed link format: <code>%s</code>", "vmess://xxxxx")%></span>
+	</div>
+</div>
+<div id="_import-modal" class="_import-modal" style="display: none;">
+	<div class="_import-modal__main">
+		<h4><%:Import multiple vmess:// links at once. One link per line.%></h4>
+		<textarea id="_import-modal__input" rows="10"></textarea>
+	</div>
+	<div class="_import-modal__footer">
+		<input type="button" class="cbi-button " value="<%:Close%>" onclick="return close_import_modal(this);" />
+		<input type="button" class="cbi-button cbi-button-apply" value="<%:Submit%>" onclick="return import_outbound(this);" />
 	</div>
 </div>
 
 <script type="text/javascript">//<![CDATA[
+	function show_import_modal(btn) {
+		var modal = document.getElementById("_import-modal");
+		modal.style.display = "block";
+	}
+
+	function close_import_modal(btn) {
+		var modal = document.getElementById("_import-modal");
+		modal.style.display = "none";
+	}
+
 	function import_outbound(btn) {
-		var link = window.prompt('<%:Vmess link:%>', '');
+		var input = document.getElementById("_import-modal__input");
+		var link = (input.value || "").trim();
 
 		if (!link) return;
 
-		if (link.indexOf("vmess://") !== 0)
-		{
-			window.alert('<%:Unsupported Link%>');
+		if (!/^(vmess:\/\/[\w+=]+\s*)+$/.test(link)) {
+			alert('<%:Unsupported Link%>');
 			return;
 		}
 
@@ -40,12 +89,12 @@ local dsp = require "luci.dispatcher"
 				{
 					if (data.success)
 					{
-						window.alert('<%:Link imported%>');
+						alert('<%:Link imported%>');
 						window.location.reload();
 					}
 					else
 					{
-						window.alert(data.message || '<%:Import failed%>');
+						alert(data.message || '<%:Import failed%>');
 					}
 				}
 			}
