@@ -12,9 +12,10 @@ PKG_NAME:=redsocks2
 PKG_VERSION:=0.67
 PKG_RELEASE:=4
 
-PKG_SOURCE:=$(PKG_NAME)-release-$(PKG_VERSION).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/semigodking/redsocks/tar.gz/release-$(PKG_VERSION)?
 PKG_HASH:=8a213041164e973cb800fb7c08ab48f6f229168a33c552fa614bd520bc1162e3
+PKG_BUILD_DIR:=$(BUILD_DIR)/redsocks-release-$(PKG_VERSION)
 
 PKG_MAINTAINER:=semigodking <semigodking@gmail.com>
 
