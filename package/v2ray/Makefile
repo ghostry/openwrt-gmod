@@ -15,6 +15,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/v2ray-core-$(PKG_VERSION)
 
 PKG_SOURCE:=v2ray-core-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/v2fly/v2ray-core/tar.gz/v$(PKG_VERSION)?
+PKG_HASH:=9d0ca27b78beba96b8ee00141a3e45d7c706d57b3d7c449d7975a8dec815e327
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
