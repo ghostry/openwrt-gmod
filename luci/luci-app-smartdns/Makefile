@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-smartdns
-PKG_VERSION:=1.2020.05.04
+PKG_VERSION:=1.2021.08
 PKG_RELEASE:=1
 
 PKG_LICENSE:=GPLv3
