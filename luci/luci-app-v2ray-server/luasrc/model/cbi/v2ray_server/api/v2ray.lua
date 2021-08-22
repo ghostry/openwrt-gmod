@@ -4,7 +4,6 @@ local sys = require "luci.sys"
 local uci = require"luci.model.uci".cursor()
 local util = require "luci.util"
 local i18n = require "luci.i18n"
-local ipkg = require "luci.model.ipkg"
 
 local appname = "v2ray_server"
 local v2ray_api ="https://api.github.com/repos/XTLS/Xray-core/releases/latest"
@@ -250,11 +249,6 @@ function to_download(url)
 end
 
 function to_extract(file, subfix)
-    local isinstall_unzip = ipkg.installed("unzip")
-    if isinstall_unzip == nil then
-        ipkg.update()
-        ipkg.install("unzip")
-    end
 
     if not file or file == "" or not fs.access(file) then
         return {code = 1, error = i18n.translate("File path required.")}
