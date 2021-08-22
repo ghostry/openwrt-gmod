@@ -9,9 +9,9 @@ PKG_NAME:=smartdns
 PKG_VERSION:=1.2021.08
 PKG_RELEASE:=1
 
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://www.github.com/pymumu/smartdns.git
-PKG_SOURCE_VERSION:=7f1dc8a31179a6eefe1862347310cd07dd431c1d
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://github.com/pymumu/smartdns/archive/refs/tags/Release34.tar.gz
+PKG_HASH:=9ace049d38de38fadbcc5148585649d7ae7b49e074edb1a3b914a5f6b87918bf
 
 PKG_MAINTAINER:=Nick Peng <pymumu@gmail.com>
 PKG_LICENSE:=GPL-3.0-or-later
